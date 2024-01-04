@@ -17,10 +17,15 @@ public class Menu {
     @Id @GeneratedValue
     private Long id;
 
-    private Long pid;
+    private String name;
 
-    @ManyToOne
-    private File picture;
+    @Lob
+    private String content;
+
+    private boolean view;
+
+    @OneToOne(mappedBy = "menu", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private File file;
 
     private int price;
 

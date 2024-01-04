@@ -22,13 +22,13 @@ public class Ledger {
     @Id @GeneratedValue
     private Long id;
 
-    private String top;
+    private String category1;
 
-    private String sub;
-
-    private String subSub;
+    private String category2;
 
     private String name;
+
+    private String person;
 
     @OneToMany
     private List<Order> orders = new ArrayList<>();

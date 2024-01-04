@@ -1,8 +1,7 @@
 package com.kcj.management.shop.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import com.kcj.management.shop.model.menu.Menu;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -22,4 +21,7 @@ public class File {
     private String directory;
 
     private Long size;
+
+    @OneToOne
+    private Menu menu;
 }

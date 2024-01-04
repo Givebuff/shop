@@ -19,7 +19,4 @@ public class Address {
     private String address;
 
     private String phoneNumber;
-
-    @OneToMany(mappedBy = "address")
-    private List<Delivery> deliveries = new ArrayList<>();
 }

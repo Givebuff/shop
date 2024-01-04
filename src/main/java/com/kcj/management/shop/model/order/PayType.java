@@ -1,5 +1,5 @@
 package com.kcj.management.shop.model.order;
 
 public enum PayType {
-    CARD, MONEY, RECEIPT, LEDGER;
+    CARD, MONEY, RECEIPT, LEDGER, NONE;
 }
