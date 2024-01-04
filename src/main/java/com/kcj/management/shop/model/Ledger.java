@@ -5,6 +5,7 @@ import com.kcj.management.shop.model.order.PayType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -29,6 +30,7 @@ public class Ledger {
 
     private String name;
 
+    @OneToMany
     private List<Order> orders = new ArrayList<>();
 
     public int getTotalPrice(){

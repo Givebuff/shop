@@ -21,8 +21,10 @@ public class OrderItem {
     @ManyToOne
     private Order order;
 
+    @ManyToOne
     private Menu menu;
 
+    @OneToMany
     private List<MenuOption> menuOptions = new ArrayList<>();
 
     public int getTotalPrice(){
