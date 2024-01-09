@@ -1,8 +1,6 @@
 package com.kcj.management.shop.model.staff;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -17,5 +15,8 @@ public class Staff {
 
     private String name;
 
-    private StaffRole memberRole;
+    @Enumerated(EnumType.STRING)
+    private StaffRole staffRole;
+
+    private String password;
 }
