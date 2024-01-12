@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>Shop - Menu Registry</title>
+    <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css">
+</head>
+<body>
+<h2 class="title">메뉴 등록</h2>
+<hr>
+<form method="post" action="/menu/registry">
+    <div class="registry-menu-style">
+        <label for="file" class="input-label">메뉴 사진</label>
+        <input style="display:none;" id="file" name="file" type="file" accept="image/gif, image/png, image/jpeg"
+               onchange="readURL(this, 10);"/>
+
+        <img class="menu-picture" id="preview" style="margin-left:10px;" onclick="resetImg(this);"/>
+    </div>
+
+    <div class="registry-menu-style">
+        <label for="category" class="input-label"> 메뉴 분류</label>
+        <select class="input-text" type="text" name="category" id="category">
+            <option value="1">카테고리1</option>
+            <option value="2">카테고리2</option>
+            <option value="3">카테고리3</option>
+            <option value="4">카테고리4</option>
+            <option value="5">카테고리5</option>
+        </select>
+    </div>
+
+    <div class="registry-menu-style">
+        <label for="name" class="input-label"> 메뉴 이름</label>
+        <input class="input-text" type="text" name="name" id="name">
+    </div>
+
+    <div class="registry-menu-style">
+        <label for="price" class="input-label"> 메뉴 가격</label>
+        <input class="input-text" type="text" name="price" id="price" oninput="formatNumber(this)"/>
+        원
+    </div>
+
+    <div class="registry-menu-style">
+        <label for="content" class="input-label"> 메뉴 설명</label>
+        <input class="input-textarea" type="text" name="content" id="content">
+    </div>
+    <br><br>
+    <div class="registry-menu-button">
+        <label for="submit" class="input-label">메뉴 등록</label>
+        <input style="display:none;" type="submit" name="submit" id="submit">
+        <a class="input-label" href="/menu/registry">메뉴 취소</a>
+    </div>
+</form>
+<script th:src="@{/js/shop.js}"></script>
+</body>
+</html>
