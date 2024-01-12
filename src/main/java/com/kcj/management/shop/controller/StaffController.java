@@ -15,4 +15,9 @@ public class StaffController {
     public String loginPage(){
         return "/login";
     }
+
+    @GetMapping("/test")
+    public String testPage(){
+        return "/test";
+    }
 }
