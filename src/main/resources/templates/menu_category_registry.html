@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>Shop - Menu Category Registry</title>
+    <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css">
+</head>
+<body>
+<h2 class="title">카테고리 등록</h2>
+<hr>
+<form method="post" th:action="@{/menu/category/registry}">
+
+    <div class="registry-menu-style">
+        <label for="name" class="input-label"> 카테고리 이름</label>
+        <input class="input-text" type="text" name="name" id="name">
+    </div>
+
+    <br><br>
+    <div class="registry-menu-button">
+        <label for="submit" class="input-label">카테고리 등록</label>
+        <input style="display:none;" type="submit" name="submit" id="submit">
+        <a class="input-label" th:href="@{/menu/registry}">카테고리 취소</a>
+    </div>
+</form>
+<script th:src="@{/js/shop.js}"></script>
+</body>
+</html>
