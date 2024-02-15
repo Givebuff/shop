@@ -2,14 +2,6 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.2.1'
 	id 'io.spring.dependency-management' version '1.1.4'
-	id 'com.github.node-gradle.node' version '7.0.1'
-}
-
-node {
-	version = '21.4.0'
-	npmVersion = '10.2.4'
-	download = true
-	nodeProjectDir = file('${projectDir}/src/main/resources/static')
 }
 
 group = 'com.kcj.management'
@@ -43,11 +35,6 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
-}
-
-task copyFrontLib(type: Copy) {
-	from "${projectDir}/src/main/resources/static"
-	into "${projectDir}/build/resources/main/static/."
 }
 
 tasks.named('test') {

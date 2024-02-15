@@ -27,6 +27,8 @@ public class OrderItem {
     @OneToMany
     private List<MenuOption> menuOptions = new ArrayList<>();
 
+    private int count;
+
     public int getTotalPrice(){
         int total = menu.getPrice();
 
@@ -34,6 +36,6 @@ public class OrderItem {
             total += menuOption.getPrice();
         }
 
-        return total;
+        return total * count;
     }
 }

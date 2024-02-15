@@ -1,14 +1,5 @@
 {
-  "name": "static",
-  "version": "1.0.0",
-  "description": "\u001b[D\u001b[C\u001b[D\u001b[C",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
+  "devDependencies": {
     "tailwindcss": "^3.4.1"
   }
 }
