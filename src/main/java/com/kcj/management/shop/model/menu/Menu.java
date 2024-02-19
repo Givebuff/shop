@@ -1,10 +1,7 @@
 package com.kcj.management.shop.model.menu;
 
-import com.kcj.management.shop.model.File;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +9,9 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class Menu {
     @Id @GeneratedValue
     private Long id;
@@ -22,16 +21,14 @@ public class Menu {
     @Lob
     private String content;
 
-    private boolean view;
-
-    @OneToOne(mappedBy = "menu", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private File file;
+    @Builder.Default
+    private boolean used = true;
 
     private int price;
 
     @ManyToOne
     private MenuCategory menuCategory;
 
-    @OneToMany(mappedBy = "menu")
+    @OneToMany(mappedBy = "menu", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<MenuOption> menuOptions = new ArrayList<>();
 }

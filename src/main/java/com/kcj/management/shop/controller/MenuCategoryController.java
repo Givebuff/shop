@@ -19,13 +19,13 @@ public class MenuCategoryController {
     }
 
     @PostMapping("/menu/category/registry")
-    public String menuCategoryRegistry(
+    public String menuCategoryRegistry (
             @RequestParam String name
     ){
         MenuCategory menuCategory = new MenuCategory();
         menuCategory.setName(name);
-        menuCategoryService.menuCategorySave(menuCategory);
+        menuCategoryService.saveMenuCategory(menuCategory);
 
-        return "redirect:/menu/category/registry";
+        return "redirect:/menu";
     }
 }
