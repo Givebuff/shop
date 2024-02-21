@@ -1,11 +1,10 @@
 package com.kcj.management.shop.model.order;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,12 +23,12 @@ public abstract class Order {
     private PayType payType;
 
     @Temporal(TemporalType.TIMESTAMP)
-    private Timestamp orderDate;
+    private LocalDateTime orderDate;
 
     @Temporal(TemporalType.TIMESTAMP)
-    private Timestamp paymentDate;
+    private LocalDateTime paymentDate;
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> orderItems = new ArrayList<>();
 
     public int getTotalPrice(){
@@ -50,6 +49,6 @@ public abstract class Order {
 
     public void completePayment(PayType payType){
         setPayType(payType);
-        getPaymentDate().setTime(System.currentTimeMillis());
+        paymentDate = LocalDateTime.now();
     }
 }
