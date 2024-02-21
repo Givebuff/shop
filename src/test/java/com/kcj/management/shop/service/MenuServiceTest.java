@@ -3,6 +3,7 @@ package com.kcj.management.shop.service;
 import com.kcj.management.shop.model.menu.Menu;
 import com.kcj.management.shop.model.menu.MenuCategory;
 import jakarta.annotation.PostConstruct;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -67,7 +68,7 @@ class MenuServiceTest {
 
     @Test
     void 이름_검색(){
-        System.out.println(menuService.findByName("안동찜닭").getPrice());
+        Assertions.assertEquals(menuService.findByName("안동찜닭").getPrice(), 28000);
     }
 
     @Test
@@ -94,6 +95,6 @@ class MenuServiceTest {
         System.out.println(menu.getId());
 
         menuService.unusedMenu(preMenu.getId());
-        System.out.println(menuService.findByName("굴탕").getPrice());
+        Assertions.assertEquals(menuService.findByName("굴탕").getPrice(), 10000);
     }
 }

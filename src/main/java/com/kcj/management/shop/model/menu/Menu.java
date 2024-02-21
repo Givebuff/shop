@@ -29,6 +29,7 @@ public class Menu {
     @ManyToOne
     private MenuCategory menuCategory;
 
+    @Builder.Default
     @OneToMany(mappedBy = "menu", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<MenuOption> menuOptions = new ArrayList<>();
 }

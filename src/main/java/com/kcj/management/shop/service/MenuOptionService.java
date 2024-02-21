@@ -32,20 +32,18 @@ public class MenuOptionService {
         }
     }
 
-    public void unusedMenuOption(Long id){
-        findById(id).setUsed(false);
-    }
+    public MenuOption findByMenuAndName(Menu menu, String name){
+        Optional<MenuOption> optionalMenuOption = menuOptionRepository.findByMenuAndNameAndUsedTrue(menu, name);
 
-    public List<MenuOption> getUsedMenuOption(Long id){
-        Menu menu = menuService.findById(id);
-        List<MenuOption> menuOptions = new ArrayList<>();
-
-        for(MenuOption menuOption: menu.getMenuOptions()){
-            if(menuOption.isUsed()){
-                menuOptions.add(menuOption);
-            }
+        if(optionalMenuOption.isPresent()){
+            return optionalMenuOption.get();
+        } else {
+            throw new RuntimeException("error : " + name + " not exist!!");
         }
 
-        return menuOptions;
+    }
+
+    public void unusedMenuOption(Long id){
+        findById(id).setUsed(false);
     }
 }
