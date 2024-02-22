@@ -8,19 +8,14 @@ public class DateUtil {
     }
 
     public static LocalDateTime intToLocalDateTime(int y, int M, int d, int h, int m){
-        return intToLocalDateTime(y,M,d,h,m,0);
+        return intToLocalDateTime(y,M,d,h,m,59);
     }
 
     public static LocalDateTime intToLocalDateTime(int y, int M, int d, int h){
-        return intToLocalDateTime(y,M,d,h,0);
+        return intToLocalDateTime(y,M,d,h,59);
     }
 
     public static LocalDateTime intToLocalDateTime(int y, int M, int d){
-        return intToLocalDateTime(y,M,d,0);
+        return intToLocalDateTime(y,M,d,23);
     }
-
-    public static LocalDateTime intToLocalDateTime(int y, int M){
-        return intToLocalDateTime(y,M,1);
-    }
-
 }
