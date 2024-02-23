@@ -1,12 +1,16 @@
 package com.kcj.management.shop.service;
 
+import com.kcj.management.shop.exception.IdNotFoundException;
 import com.kcj.management.shop.model.order.Order;
 import com.kcj.management.shop.model.order.OrderItem;
+import com.kcj.management.shop.model.order.OrderType;
 import com.kcj.management.shop.model.order.WorkStatus;
 import com.kcj.management.shop.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -24,7 +28,7 @@ public class OrderService {
         if(optionalOrder.isPresent()){
             return optionalOrder.get();
         } else {
-            throw new RuntimeException("error : " + id + " order id not exist");
+            throw new IdNotFoundException(getClass().getName());
         }
     }
 
@@ -35,4 +39,8 @@ public class OrderService {
     public void removeOrderItem(Long orderId, OrderItem orderItem) {
         findById(orderId).removeOrderItem(orderItem);
     }
+
+    public List<Order> getNoPaymentOrderList() {
+        return null;
+    };
 }

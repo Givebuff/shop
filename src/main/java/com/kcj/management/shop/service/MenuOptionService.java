@@ -1,5 +1,7 @@
 package com.kcj.management.shop.service;
 
+import com.kcj.management.shop.exception.IdNotFoundException;
+import com.kcj.management.shop.exception.NotExistException;
 import com.kcj.management.shop.model.menu.Menu;
 import com.kcj.management.shop.model.menu.MenuOption;
 import com.kcj.management.shop.repository.MenuOptionRepository;
@@ -28,7 +30,7 @@ public class MenuOptionService {
         if(optionalMenuOption.isPresent()){
             return optionalMenuOption.get();
         } else {
-            throw new RuntimeException("error : " + id + " menuoption id not exist!!");
+            throw new IdNotFoundException(getClass().getName());
         }
     }
 
@@ -38,7 +40,7 @@ public class MenuOptionService {
         if(optionalMenuOption.isPresent()){
             return optionalMenuOption.get();
         } else {
-            throw new RuntimeException("error : " + name + " not exist!!");
+            throw new NotExistException(getClass().getName());
         }
 
     }

@@ -52,6 +52,16 @@ public class Order {
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> orderItems = new ArrayList<>();
 
+    public void setOrderType(OrderType orderType){
+        this.orderType = orderType;
+        if(orderDate == null) orderDate = LocalDateTime.now();
+    }
+
+    public void setPayType(PayType payType){
+        this.payType = payType;
+        if(paymentDate == null) paymentDate = LocalDateTime.now();
+    }
+
     public int getTotalPrice(){
         int total = 0;
         for(OrderItem orderItem: orderItems){
@@ -61,15 +71,14 @@ public class Order {
     }
 
     public void addOrderItem(OrderItem orderItem){
-        orderItems.add(orderItem);
+        OrderItem findItem = orderItems.stream().filter(item -> item.getId().equals(orderItem.getId()))
+                .findAny().orElse(null);
+
+        if(findItem == null) orderItems.add(orderItem);
     }
 
     public void removeOrderItem(OrderItem orderItem){
-        orderItems.remove(orderItem);
-    }
-
-    public void completePayment(PayType payType){
-        setPayType(payType);
-        paymentDate = LocalDateTime.now();
+        orderItems.stream().filter(item -> item.getId().equals(orderItem.getId()))
+                .findAny().ifPresent(findItem -> orderItems.remove(orderItem));
     }
 }

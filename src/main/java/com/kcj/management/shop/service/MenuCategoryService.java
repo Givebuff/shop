@@ -1,5 +1,7 @@
 package com.kcj.management.shop.service;
 
+import com.kcj.management.shop.exception.IdNotFoundException;
+import com.kcj.management.shop.exception.NotExistException;
 import com.kcj.management.shop.model.menu.MenuCategory;
 import com.kcj.management.shop.repository.MenuCategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +29,7 @@ public class MenuCategoryService {
         if(optionalMenuCategory.isPresent()){
             return optionalMenuCategory.get();
         } else {
-            throw new RuntimeException("error : " + id + " menu category id not exist!!");
+            throw new IdNotFoundException(getClass().getName());
         }
     }
 
@@ -37,7 +39,7 @@ public class MenuCategoryService {
         if(optionalMenuCategory.isPresent()) {
             return optionalMenuCategory.get();
         } else {
-            throw new RuntimeException("error : " + name + " not exist value");
+            throw new NotExistException(getClass().getName());
         }
     }
 

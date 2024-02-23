@@ -1,5 +1,6 @@
 package com.kcj.management.shop.service;
 
+import com.kcj.management.shop.exception.IdNotFoundException;
 import com.kcj.management.shop.model.menu.Menu;
 import com.kcj.management.shop.model.menu.MenuCategory;
 import com.kcj.management.shop.repository.MenuRepository;
@@ -27,7 +28,7 @@ public class MenuService {
         if(optionalMenu.isPresent()) {
             return optionalMenu.get();
         } else {
-            throw new RuntimeException("error: " + id + "menu id not exist!!");
+            throw new IdNotFoundException(getClass().getName());
         }
     }
 
