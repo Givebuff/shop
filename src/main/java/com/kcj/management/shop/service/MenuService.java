@@ -22,7 +22,7 @@ public class MenuService {
         menuRepository.save(menu);
     }
 
-    public Menu findById(Long id){
+    public Menu findById(String id){
         Optional<Menu> optionalMenu = menuRepository.findById(id);
 
         if(optionalMenu.isPresent()) {
@@ -47,7 +47,7 @@ public class MenuService {
         return menuRepository.findByNameLikeAndUsedTrue(StringUtil.delimiterString(name, 0));
     }
 
-    public void unusedMenu(Long id){
+    public void unusedMenu(String id){
         findById(id).setUsed(false);
     }
 }

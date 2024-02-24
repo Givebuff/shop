@@ -17,8 +17,6 @@ import java.util.Optional;
 public class MenuOptionService {
     @Autowired
     private MenuOptionRepository menuOptionRepository;
-    @Autowired
-    private MenuService menuService;
 
     public void saveMenuOption(MenuOption menuOption){
         menuOptionRepository.save(menuOption);

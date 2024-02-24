@@ -17,7 +17,7 @@ public class MenuOptionController {
 
     @PostMapping("/menu/option/registry")
     public String saveMenuOption(
-            @RequestParam("menuId") Long menuId,
+            @RequestParam("menuId") String menuId,
             @RequestParam("name") String name,
             @RequestParam("content") String content,
             @RequestParam("price") int price){
