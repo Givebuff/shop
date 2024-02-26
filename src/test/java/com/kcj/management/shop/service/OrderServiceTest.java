@@ -156,10 +156,12 @@ class OrderServiceTest {
         menu1Options.add(menuOptionService.findByMenuAndName(menu1, "안맵게"));
         menu1Options.add(menuOptionService.findByMenuAndName(menu1, "당면 많이"));
 
-        orderItemService.saveOrderItem(OrderItem.builder()
+        OrderItem orderItem1 = OrderItem.builder()
                 .menu(menu1)
                 .menuOptions(menu1Options)
-                .count(2).build());
+                .count(2).build();
+
+        orderItemService.saveOrderItem(orderItem1);
 
     }
 }
