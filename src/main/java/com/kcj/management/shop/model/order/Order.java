@@ -1,6 +1,8 @@
 package com.kcj.management.shop.model.order;
 
+import com.kcj.management.shop.model.Department;
 import com.kcj.management.shop.model.Ledger;
+import com.kcj.management.shop.util.StringUtil;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,6 +20,9 @@ import java.util.List;
 public class Order {
     @Id @GeneratedValue
     private Long id;
+
+    @ManyToOne
+    private Department department;
 
     @ManyToOne
     private Ledger ledger;
@@ -51,6 +56,15 @@ public class Order {
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> orderItems = new ArrayList<>();
+
+    private String htmlId;
+
+    @PostPersist
+    public void afterSave(){
+        if(htmlId == null) {
+            htmlId = getClass().getSimpleName().toLowerCase() + StringUtil.DELIMITER +  String.format("%06d", id);
+        }
+    }
 
     public void setOrderType(OrderType orderType){
         this.orderType = orderType;

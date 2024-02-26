@@ -2,7 +2,6 @@ package com.kcj.management.shop.service;
 
 import com.kcj.management.shop.model.menu.Menu;
 import com.kcj.management.shop.model.menu.MenuCategory;
-import jakarta.annotation.PostConstruct;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -63,6 +62,7 @@ class MenuServiceTest {
     void 카테고리_검색(){
         for(Menu menu : menuService.findByMenuCategory(menuCategoryService.findByName("닭"))){
             System.out.println(menu.getName());
+            System.out.println(menu.getHtmlId());
         }
     }
 

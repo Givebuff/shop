@@ -50,14 +50,14 @@ public class MenuController {
     }
 
     @GetMapping("/menu/change/{id}")
-    public String changeMenuPage(@PathVariable("id") String id, Model model){
+    public String changeMenuPage(@PathVariable("id") Long id, Model model){
         model.addAttribute("menu", menuService.findById(id));
         return "/menu/change";
     }
 
     @PostMapping("/menu/change")
     public String changeMenu(
-            @RequestParam String id,
+            @RequestParam Long id,
             @RequestParam Long categoryId,
             @RequestParam String name,
             @RequestParam String price,

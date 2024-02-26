@@ -22,7 +22,7 @@ public class MenuService {
         menuRepository.save(menu);
     }
 
-    public Menu findById(String id){
+    public Menu findById(Long id){
         Optional<Menu> optionalMenu = menuRepository.findById(id);
 
         if(optionalMenu.isPresent()) {
@@ -41,13 +41,13 @@ public class MenuService {
     }
 
     public List<Menu> findByNameLike(String name, int delimiter) {
-        return menuRepository.findByNameLikeAndUsedTrue(StringUtil.delimiterString(name, delimiter));
+        return menuRepository.findByNameLikeAndUsedTrue(StringUtil.likeDelimiterString(name, delimiter));
     }
     public List<Menu> findByNameLike(String name) {
-        return menuRepository.findByNameLikeAndUsedTrue(StringUtil.delimiterString(name, 0));
+        return menuRepository.findByNameLikeAndUsedTrue(StringUtil.likeDelimiterString(name, 0));
     }
 
-    public void unusedMenu(String id){
+    public void unusedMenu(Long id){
         findById(id).setUsed(false);
     }
 }

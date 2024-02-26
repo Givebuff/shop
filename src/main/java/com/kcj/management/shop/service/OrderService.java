@@ -1,6 +1,7 @@
 package com.kcj.management.shop.service;
 
 import com.kcj.management.shop.exception.IdNotFoundException;
+import com.kcj.management.shop.model.Department;
 import com.kcj.management.shop.model.order.*;
 import com.kcj.management.shop.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,5 +55,17 @@ public class OrderService {
 
     public List<Order> getNoPaymentOrderList() {
         return null;
+    }
+
+    public List<Order> findByDepartment(Department department) {
+        return orderRepository.findByDepartment(department);
+    }
+
+    public List<Order> departmentPayment(Department department) {
+        return orderRepository.findByDepartmentAndLedger(department, null);
+    }
+
+    public List<Order> departmentCompletePayment(Department department){
+        return orderRepository.findByDepartmentAndLedgerIsNotNull(department);
     }
 }

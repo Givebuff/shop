@@ -1,5 +1,7 @@
 package com.kcj.management.shop.repository;
 
+import com.kcj.management.shop.model.Department;
+import com.kcj.management.shop.model.Ledger;
 import com.kcj.management.shop.model.order.Order;
 import com.kcj.management.shop.model.order.OrderType;
 import com.kcj.management.shop.model.order.PayType;
@@ -16,4 +18,7 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     List<Order> findByOrderDateBetween(LocalDateTime before, LocalDateTime after);
     List<Order> findByPaymentDateBetween(LocalDateTime before, LocalDateTime after);
     List<Order> findByPayTypeAndWorkStatus(PayType payType, WorkStatus workStatus);
+    List<Order> findByDepartment(Department department);
+    List<Order> findByDepartmentAndLedger(Department department, Ledger ledger);
+    List<Order> findByDepartmentAndLedgerIsNotNull(Department department);
 }
