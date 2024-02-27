@@ -95,4 +95,16 @@ public class Order {
         orderItems.stream().filter(item -> item.getId().equals(orderItem.getId()))
                 .findAny().ifPresent(findItem -> orderItems.remove(orderItem));
     }
+
+    @Override
+    public String toString(){
+        String result = StringUtil.toStringHeader(getClass().getSimpleName());
+
+        for(OrderItem item: orderItems){
+            result += item.toString();
+        }
+
+        result += "총 : " + getTotalPrice() + "원\n" + StringUtil.toStringFooter(getClass().getSimpleName());
+        return result;
+    }
 }

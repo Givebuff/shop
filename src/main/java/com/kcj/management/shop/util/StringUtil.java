@@ -33,4 +33,13 @@ public class StringUtil {
     public static String suffixAndRemoveZero(String value) {
         return getSuffix(value).replaceFirst("^0+(?!$)", "");
     }
+
+    public static String toStringHeader(String o) {
+        return "---------------------" + o + " Start----------------------";
+    }
+
+    public static String toStringFooter(String o) {
+        return "---------------------" + o + " End----------------------";
+    }
+
 }

@@ -26,6 +26,7 @@ public class OrderItem {
     private Menu menu;
 
     @OneToMany
+    @Builder.Default
     private List<MenuOption> menuOptions = new ArrayList<>();
 
     private int count;
@@ -47,5 +48,17 @@ public class OrderItem {
         }
 
         return total * count;
+    }
+
+    @Override
+    public String toString(){
+        String result = StringUtil.toStringHeader(getClass().getSimpleName()) + "\n" + menu.toString();
+
+        for(MenuOption option: menuOptions) {
+            result += option.toString();
+        }
+        result += "총 : " + count + "개 , " + getTotalPrice() + "원\n" + StringUtil.toStringFooter(getClass().getSimpleName());
+
+        return result;
     }
 }

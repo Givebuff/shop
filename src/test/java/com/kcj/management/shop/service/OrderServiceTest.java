@@ -45,43 +45,16 @@ class OrderServiceTest {
 
         menuCategoryService.saveMenuCategory(MenuCategory.builder().name("닭").build());
         menuCategoryService.saveMenuCategory(MenuCategory.builder().name("굴").build());
+        menuCategoryService.saveMenuCategory(MenuCategory.builder().name("사이드").build());
 
-        MenuOption menuOption1 = MenuOption.builder()
-                .name("안 맵게")
-                .content("안맵게")
-                .price(0)
+        Menu menu = Menu.builder()
+                .name("안동찜닭")
+                .menuCategory(menuCategoryService.findByName("닭"))
+                .content("단짠")
+                .price(28000)
                 .build();
 
-        MenuOption menuOption2 = MenuOption.builder()
-                .name("맵게")
-                .content("맵게")
-                .price(0)
-                .build();
-
-        MenuOption menuOption3 = MenuOption.builder()
-                .name("당면 많이")
-                .content("당면 많이")
-                .price(2000)
-                .build();
-
-        menuOptionService.saveMenuOption(menuOption1);
-        menuOptionService.saveMenuOption(menuOption2);
-        menuOptionService.saveMenuOption(menuOption3);
-
-        List<MenuOption> menuOptions1 = new ArrayList<>();
-        menuOptions1.add(menuOption1);
-        menuOptions1.add(menuOption2);
-        menuOptions1.add(menuOption3);
-
-        menuService.saveMenu(
-                Menu.builder()
-                        .name("안동찜닭")
-                        .menuCategory(menuCategoryService.findByName("닭"))
-                        .content("단짠")
-                        .menuOptions(menuOptions1)
-                        .price(28000)
-                        .build()
-        );
+        menuService.saveMenu(menu);
         menuService.saveMenu(
                 Menu.builder()
                         .name("닭볶음탕")
@@ -106,14 +79,59 @@ class OrderServiceTest {
                         .price(9000)
                         .build()
         );
+        menuService.saveMenu(
+                Menu.builder()
+                        .name("굴파전")
+                        .menuCategory(menuCategoryService.findByName("굴"))
+                        .price(20000)
+                        .build()
+        );
+        menuService.saveMenu(
+                Menu.builder()
+                        .name("공기밥")
+                        .menuCategory(menuCategoryService.findByName("사이드"))
+                        .price(1500)
+                        .build()
+        );
 
-        orderService.saveOrder(Order.builder().tableNum(3)
-                .orderType(OrderType.RESERVATION)
-                .workStatus(WorkStatus.RESERVATION)
-                .reservationContent("코보")
-                .people(4)
-                .reservationDate(reservationTime)
-                .build());
+        MenuOption menuOption1 = MenuOption.builder()
+                .name("안맵게")
+                .content("안맵게")
+                .menu(menu)
+                .price(0)
+                .build();
+
+        MenuOption menuOption2 = MenuOption.builder()
+                .name("맵게")
+                .content("맵게")
+                .menu(menu)
+                .price(0)
+                .build();
+
+        MenuOption menuOption3 = MenuOption.builder()
+                .name("당면 많이")
+                .content("당면 많이")
+                .menu(menu)
+                .price(2000)
+                .build();
+        System.out.println("menu id" + menu.getId());
+        menuOptionService.saveMenuOption(menuOption1);
+        menuOptionService.saveMenuOption(menuOption2);
+        menuOptionService.saveMenuOption(menuOption3);
+
+        menu.getMenuOptions().add(menuOption1);
+        menu.getMenuOptions().add(menuOption2);
+        menu.getMenuOptions().add(menuOption3);
+
+        System.out.println("menuoption" + menuOption1.getId());
+        System.out.println("menuoption" + menuOption1.getMenu().getId());
+        System.out.println("menuoption" + menuOption2.getId());
+        System.out.println("menuoption" + menuOption2.getMenu().getId());
+        System.out.println("menuoption" + menuOption3.getId());
+        System.out.println("menuoption" + menuOption3.getMenu().getId());
+
+        System.out.println(menu.isUsed() + " " + menu.getMenuOptions().size());
+
         departmentService.saveDepartment(
                 Department.builder()
                         .section("환경과")
@@ -150,18 +168,90 @@ class OrderServiceTest {
                         .dept("민원부")
                         .build()
         );
+    }
 
-        Menu menu1 = menuService.findByName("안동찜닭");
+    @Test
+    void 홀테스트(){
+        Menu 찜닭 = menuService.findByName("안동찜닭");
         List<MenuOption> menu1Options = new ArrayList<>();
-        menu1Options.add(menuOptionService.findByMenuAndName(menu1, "안맵게"));
-        menu1Options.add(menuOptionService.findByMenuAndName(menu1, "당면 많이"));
+        menu1Options.add(menuOptionService.findByMenuAndName(찜닭, "안맵게"));
+        menu1Options.add(menuOptionService.findByMenuAndName(찜닭, "당면 많이"));
 
-        OrderItem orderItem1 = OrderItem.builder()
-                .menu(menu1)
+        Menu 굴국밥 = menuService.findByName("굴국밥");
+
+        OrderItem holeItem = OrderItem.builder()
+                .menu(찜닭)
                 .menuOptions(menu1Options)
                 .count(2).build();
 
-        orderItemService.saveOrderItem(orderItem1);
+        OrderItem holeItem2 = OrderItem.builder()
+                .menu(굴국밥)
+                .count(8)
+                .build();
+
+        orderItemService.saveOrderItem(holeItem);
+        orderItemService.saveOrderItem(holeItem2);
+
+        System.out.println(holeItem.toString());
+        System.out.println(holeItem2.toString());
+    }
+
+    @Test
+    void 배달테스트(){
+        Menu 찜닭 = menuService.findByName("안동찜닭");
+        List<MenuOption> menu1Options = new ArrayList<>();
+        menu1Options.add(menuOptionService.findByMenuAndName(찜닭, "안맵게"));
+
+        Menu 공기밥 = menuService.findByName("공기밥");
+
+        OrderItem deliveryItem = OrderItem.builder()
+                .menu(찜닭)
+                .menuOptions(menu1Options)
+                .count(1).build();
+
+        OrderItem deliveryItem2 = OrderItem.builder()
+                .menu(공기밥)
+                .count(4).build();
+
+        orderItemService.saveOrderItem(deliveryItem);
+        orderItemService.saveOrderItem(deliveryItem2);
+
+    }
+
+    @Test
+    void 예약테스트(){
+        Menu 찜닭 = menuService.findByName("안동찜닭");
+        List<MenuOption> menu1Options = new ArrayList<>();
+        menu1Options.add(menuOptionService.findByMenuAndName(찜닭, "안맵게"));
+        menu1Options.add(menuOptionService.findByMenuAndName(찜닭, "당면 많이"));
+
+        Menu 굴국밥 = menuService.findByName("굴국밥");
+
+        Menu 공기밥 = menuService.findByName("공기밥");
+        Menu 굴파전 = menuService.findByName("굴파전");
+
+        OrderItem reservationItem = OrderItem.builder()
+                .menu(굴파전)
+                .count(2).build();
+
+        OrderItem reservationItem2 = OrderItem.builder()
+                .menu(굴국밥)
+                .count(4).build();
+        orderItemService.saveOrderItem(reservationItem);
+        orderItemService.saveOrderItem(reservationItem2);
+    }
+
+    @Test
+    void 포장테스트(){
+        Menu 찜닭 = menuService.findByName("안동찜닭");
+        List<MenuOption> menu1Options = new ArrayList<>();
+        menu1Options.add(menuOptionService.findByMenuAndName(찜닭, "안맵게"));
+        menu1Options.add(menuOptionService.findByMenuAndName(찜닭, "당면 많이"));
+
+        Menu 굴국밥 = menuService.findByName("굴국밥");
+
+        Menu 공기밥 = menuService.findByName("공기밥");
+        Menu 굴파전 = menuService.findByName("굴파전");
 
     }
 }

@@ -35,4 +35,9 @@ public class MenuOption {
             htmlId = getClass().getSimpleName().toLowerCase() + StringUtil.DELIMITER +  String.format("%06d", id);
         }
     }
+
+    @Override
+    public String toString(){
+        return "MenuOption : " + name + " - " + price + "원 \n";
+    }
 }
