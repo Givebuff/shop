@@ -9,4 +9,6 @@ public interface AddressRepository extends JpaRepository<Address, Long> {
     List<Address> findByPhoneNumberLike(String phoneNumber);
 
     List<Address> findByAddressLike(String Address);
+
+    List<Address> findByDetailLike(String detail);
 }

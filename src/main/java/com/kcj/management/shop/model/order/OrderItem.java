@@ -52,7 +52,7 @@ public class OrderItem {
 
     @Override
     public String toString(){
-        String result = StringUtil.toStringHeader(getClass().getSimpleName()) + "\n" + menu.toString();
+        String result = StringUtil.toStringHeader(getClass().getSimpleName()) + menu.toString();
 
         for(MenuOption option: menuOptions) {
             result += option.toString();

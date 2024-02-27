@@ -15,13 +15,11 @@ public class InitLoader implements CommandLineRunner {
     private StaffRepository staffRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
-    @Value("${shop.security.staff.password.suffix}")
-    private String suffix;
 
     @Override
     public void run(String... args) throws Exception {
         for(StaffRole role :StaffRole.values()){
-            createUser(role.name().toLowerCase(), role.name().toLowerCase() + suffix, role);
+            createUser(role.name().toLowerCase(), role.name().toLowerCase(), role);
         }
     }
 

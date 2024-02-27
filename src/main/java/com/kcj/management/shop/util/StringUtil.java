@@ -7,6 +7,14 @@ public class StringUtil {
         return Integer.parseInt(price.replaceAll(",", ""));
     }
 
+    /**
+     * 1  : name% <br>
+     * 10 : %name <br>
+     * 11 : %name%
+     * @param name
+     * @param delimiter
+     * @return
+     */
     public static String likeDelimiterString(String name, int delimiter) {
         switch (delimiter) {
             case 1 :
@@ -35,11 +43,11 @@ public class StringUtil {
     }
 
     public static String toStringHeader(String o) {
-        return "---------------------" + o + " Start----------------------";
+        return "---------------------" + o + " Start----------------------\n";
     }
 
     public static String toStringFooter(String o) {
-        return "---------------------" + o + " End----------------------";
+        return "---------------------" + o + " End----------------------\n";
     }
 
 }

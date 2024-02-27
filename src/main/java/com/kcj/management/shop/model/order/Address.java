@@ -17,5 +17,7 @@ public class Address {
 
     private String address;
 
+    private String detail;
+
     private String phoneNumber;
 }

@@ -4,10 +4,7 @@ import com.kcj.management.shop.model.Department;
 import com.kcj.management.shop.model.menu.Menu;
 import com.kcj.management.shop.model.menu.MenuCategory;
 import com.kcj.management.shop.model.menu.MenuOption;
-import com.kcj.management.shop.model.order.Order;
-import com.kcj.management.shop.model.order.OrderItem;
-import com.kcj.management.shop.model.order.OrderType;
-import com.kcj.management.shop.model.order.WorkStatus;
+import com.kcj.management.shop.model.order.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -114,23 +111,10 @@ class OrderServiceTest {
                 .menu(menu)
                 .price(2000)
                 .build();
-        System.out.println("menu id" + menu.getId());
+
         menuOptionService.saveMenuOption(menuOption1);
         menuOptionService.saveMenuOption(menuOption2);
         menuOptionService.saveMenuOption(menuOption3);
-
-        menu.getMenuOptions().add(menuOption1);
-        menu.getMenuOptions().add(menuOption2);
-        menu.getMenuOptions().add(menuOption3);
-
-        System.out.println("menuoption" + menuOption1.getId());
-        System.out.println("menuoption" + menuOption1.getMenu().getId());
-        System.out.println("menuoption" + menuOption2.getId());
-        System.out.println("menuoption" + menuOption2.getMenu().getId());
-        System.out.println("menuoption" + menuOption3.getId());
-        System.out.println("menuoption" + menuOption3.getMenu().getId());
-
-        System.out.println(menu.isUsed() + " " + menu.getMenuOptions().size());
 
         departmentService.saveDepartment(
                 Department.builder()
@@ -192,8 +176,27 @@ class OrderServiceTest {
         orderItemService.saveOrderItem(holeItem);
         orderItemService.saveOrderItem(holeItem2);
 
-        System.out.println(holeItem.toString());
-        System.out.println(holeItem2.toString());
+        // 홀 주문 시작
+        Order order = Order.builder()
+                .orderType(OrderType.HOLE)
+                .orderDate(LocalDateTime.now())
+                .workStatus(WorkStatus.COOK)
+                .tableNum(4)
+                .build();
+
+        order.getOrderItems().add(holeItem);
+        order.getOrderItems().add(holeItem2);
+
+        orderService.saveOrder(order);
+        // 홀 주문 종료
+
+        // 홀 조리 완료
+        order.setWorkStatus(WorkStatus.COMPLETE);
+        // 홀 조리 완료
+
+        // 홀 계산 시작
+        order.setPayType(PayType.CARD);
+        order.setPaymentDate(LocalDateTime.now());
     }
 
     @Test
@@ -215,7 +218,6 @@ class OrderServiceTest {
 
         orderItemService.saveOrderItem(deliveryItem);
         orderItemService.saveOrderItem(deliveryItem2);
-
     }
 
     @Test

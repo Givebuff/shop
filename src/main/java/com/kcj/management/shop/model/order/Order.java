@@ -34,7 +34,8 @@ public class Order {
 
     private String reservationContent;
 
-    private int people;
+    @Builder.Default
+    private int people = 4;
 
     @Enumerated(EnumType.STRING)
     private OrderType orderType;
@@ -55,6 +56,7 @@ public class Order {
     private LocalDateTime paymentDate;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    @Builder.Default
     private List<OrderItem> orderItems = new ArrayList<>();
 
     private String htmlId;
@@ -64,11 +66,6 @@ public class Order {
         if(htmlId == null) {
             htmlId = getClass().getSimpleName().toLowerCase() + StringUtil.DELIMITER +  String.format("%06d", id);
         }
-    }
-
-    public void setOrderType(OrderType orderType){
-        this.orderType = orderType;
-        if(orderDate == null) orderDate = LocalDateTime.now();
     }
 
     public void setPayType(PayType payType){
