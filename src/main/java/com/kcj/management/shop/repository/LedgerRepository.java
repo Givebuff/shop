@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface LedgerRepository extends JpaRepository<Ledger, Long> {
     List<Ledger> findByDepartment(Department department);
+
 }

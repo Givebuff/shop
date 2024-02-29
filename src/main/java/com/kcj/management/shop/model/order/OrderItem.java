@@ -33,6 +33,9 @@ public class OrderItem {
 
     private String htmlId;
 
+    @Builder.Default
+    private boolean complete = false;
+
     @PostPersist
     public void afterSave(){
         if(htmlId == null) {

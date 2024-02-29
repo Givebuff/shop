@@ -68,4 +68,15 @@ public class OrderService {
     public List<Order> departmentCompletePayment(Department department){
         return orderRepository.findByDepartmentAndLedgerIsNotNull(department);
     }
+
+    public void orderCookComplete(Long id) {
+        Order order = findById(id);
+        for(OrderItem item :order.getOrderItems()){
+            item.setComplete(true);
+        }
+    }
+
+    public List<Order> findByAddress(Address address) {
+        return orderRepository.findByAddress(address);
+    }
 }
