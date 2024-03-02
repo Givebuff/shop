@@ -22,13 +22,13 @@ public class MenuController {
 
     @GetMapping("/menu")
     public String menuPage(){
-        return "menu";
+        return "/menu/index";
     }
     @GetMapping("/menu/registry")
     public String menuRegistryPage(Model model){
         model.addAttribute("categories", menuCategoryService.findAll());
 
-        return "menu_registry";
+        return "/menu/registry";
     }
 
     @PostMapping("/menu/registry")

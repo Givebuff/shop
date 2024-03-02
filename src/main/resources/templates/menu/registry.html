@@ -1,69 +1,4 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Category Selection</title>
-</head>
-<body>
-
-<form action="#" th:action="@{/categories}" method="get">
-    <label for="category1">대분류:</label>
-    <select id="category1" name="category1" onchange="updateSubcategories(this)">
-        <option th:each="mainCategory : ${mainCategories}" th:value="${mainCategory}" th:text="${mainCategory}"></option>
-    </select>
-
-    <label for="category2">중분류:</label>
-    <select id="category2" name="category2">
-        <!-- 중분류는 JavaScript로 업데이트됩니다. -->
-    </select>
-
-    <label for="category3">소분류:</label>
-    <select id="category3" name="category3">
-        <!-- 소분류는 JavaScript로 업데이트됩니다. -->
-    </select>
-</form>
-
-<script th:inline="javascript">
-    /* 대분류 선택 시 중분류, 소분류 업데이트 */
-    function updateSubcategories(selectElement) {
-        var selectedCategory1 = selectElement.value;
-        var category2 = document.getElementById('category2');
-        var category3 = document.getElementById('category3');
-
-        /* Thymeleaf로 부터 받은 서버 데이터를 JavaScript 변수에 할당 */
-        var subcategories = /*[[${subcategoryMap}]]*/ {};
-
-        /* 중분류 업데이트 */
-        category2.innerHTML = "";
-        for (var subcategory2 in subcategories[selectedCategory1]) {
-            var option = document.createElement("option");
-            option.value = subcategory2;
-            option.textContent = subcategory2;
-            category2.appendChild(option);
-        }
-
-        /* 소분류 업데이트 */
-        var selectedCategory2 = category2.value;
-        category3.innerHTML = "";
-        for (var subcategory3 of subcategories[selectedCategory1][selectedCategory2]) {
-            var option = document.createElement("option");
-            option.value = subcategory3;
-            option.textContent = subcategory3;
-            category3.appendChild(option);
-        }
-    }
-
-    /* 초기 로드 시 중분류, 소분류 설정 */
-    window.onload = function() {
-        updateSubcategories(document.getElementById('category1'));
-    };
-</script>
-
-</body>
-</html>
-
-<!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
@@ -118,6 +53,27 @@
                     </label>
                     <input class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                            id="search" placeholder="Your search">
+                </div>
+                <div class="flex flex-col gap-1">
+                    <label class="font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-sm"
+                           for="select">
+                        메뉴 카테고리
+                    </label>
+                    <select
+                            type="button"
+                            role="combobox"
+                            id="select"
+                            aria-controls="radix-:r3:"
+                            aria-expanded="false"
+                            aria-autocomplete="none"
+                            dir="ltr"
+                            data-state="closed"
+                            data-placeholder=""
+                            class="flex h-10 items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 w-[180px]">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                    </select>
                 </div>
                 <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2"
                         type="submit">

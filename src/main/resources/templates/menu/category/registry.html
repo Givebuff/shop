@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link th:href="@{/css/output.css}" rel="stylesheet" type="text/css">
+    <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+</head>
+<body>
+<form method="post" th:action="@{/menu/category/registry}">
+<div class="w-full py-6">
+    <div class="container flex items-center justify-center p-4">
+        <div class="grid max-w-sm w-full items-start gap-2">
+            <div class="flex flex-col gap-1">
+                <label class="font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-sm"
+                       for="name">
+                    카테고리명
+                </label>
+                <input class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                    id="name" name="name" placeholder="카테고리명">
+            </div>
+            <button class="bg-blue-500 text-white inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2"
+                    type="submit">
+                저장
+            </button>
+        </div>
+    </div>
+</div>
+</form>
+</body>
+</html>

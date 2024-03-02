@@ -43,6 +43,10 @@ public class MenuCategoryService {
         }
     }
 
+    public List<MenuCategory> findByUsedTrue() {
+        return menuCategoryRepository.findByUsedTrue();
+    }
+
     public void unusedMenuCategory(Long id) {
         findById(id).setUsed(false);
     }
