@@ -1,11 +1,13 @@
 package com.kcj.management.shop.service;
 
 import com.kcj.management.shop.exception.NotExistException;
+import com.kcj.management.shop.model.Department;
 import com.kcj.management.shop.model.Ledger;
 import com.kcj.management.shop.repository.LedgerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -25,5 +27,9 @@ public class LedgerService {
         } else {
             throw new NotExistException(getClass().getSimpleName());
         }
+    }
+
+    public List<Ledger> findByDepartment(Department department) {
+        return ledgerRepository.findByDepartment(department);
     }
 }

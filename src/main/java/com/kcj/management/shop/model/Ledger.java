@@ -27,7 +27,8 @@ public class Ledger {
 
     private String name;
 
-    @OneToMany
+    @OneToMany(mappedBy = "ledger", cascade = CascadeType.ALL)
+    @Builder.Default
     private List<Order> orders = new ArrayList<>();
 
     @Temporal(TemporalType.TIMESTAMP)

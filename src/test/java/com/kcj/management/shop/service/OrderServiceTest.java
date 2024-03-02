@@ -1,6 +1,7 @@
 package com.kcj.management.shop.service;
 
 import com.kcj.management.shop.model.Department;
+import com.kcj.management.shop.model.Ledger;
 import com.kcj.management.shop.model.menu.Menu;
 import com.kcj.management.shop.model.menu.MenuCategory;
 import com.kcj.management.shop.model.menu.MenuOption;
@@ -179,9 +180,8 @@ class OrderServiceTest {
                 .workStatus(WorkStatus.COOK)
                 .tableNum(4)
                 .build();
-
-        order.getOrderItems().add(holeItem);
-        order.getOrderItems().add(holeItem2);
+        order.addOrderItem(holeItem);
+        order.addOrderItem(holeItem2);
 
         orderService.saveOrder(order);
         // 홀 주문 종료
@@ -219,8 +219,8 @@ class OrderServiceTest {
 
         //배달 주문 시작
         Address address = new Address();
-        address.setAddress("청도 아트빌");
-        address.setDetail("201호");
+        address.setAddress("독산 스타벅스");
+        address.setDetail("큰 테이블");
         address.setPhoneNumber("01032240276");
         addressService.saveAddress(address);
 
@@ -230,8 +230,8 @@ class OrderServiceTest {
                 .workStatus(WorkStatus.COOK)
                 .address(address)
                 .build();
-        deliveryOrder.getOrderItems().add(deliveryItem);
-        deliveryOrder.getOrderItems().add(deliveryItem2);
+        deliveryOrder.addOrderItem(deliveryItem);
+        deliveryOrder.addOrderItem(deliveryItem2);
 
         orderService.saveOrder(deliveryOrder);
         // 배달 주문 종료
@@ -266,6 +266,48 @@ class OrderServiceTest {
 
         // 예약 시작
         Department department = departmentService.findBySectionAndDepartment("환경과", "환경부");
+        Order order = Order.builder()
+                .orderDate(LocalDateTime.now())
+                .orderType(OrderType.RESERVATION)
+                .tableNum(3)
+                .people(4)
+                .reservationDate(LocalDateTime.now().withHour(12).withMinute(0))
+                .workStatus(WorkStatus.RESERVATION)
+                .department(department)
+                .build();
+        order.addOrderItem(reservationItem);
+        order.addOrderItem(reservationItem2);
+
+        orderService.saveOrder(order);
+        // 예약 시작
+
+        // 예약 도착
+        Order arrviedOrder = orderService.findById(order.getId());
+        arrviedOrder.setWorkStatus(WorkStatus.COOK);
+        orderService.orderCookComplete(arrviedOrder.getId());
+        arrviedOrder.setWorkStatus(WorkStatus.COMPLETE);
+        // 예약 도착
+
+        // 장부 작성
+        arrviedOrder.setPayType(PayType.LEDGER);
+        arrviedOrder.setPaymentDate(LocalDateTime.now());
+        // 장부 작성
+
+        // 결제
+        Ledger ledger = Ledger.builder()
+                .department(arrviedOrder.getDepartment())
+                .name("홍길동")
+                .paymentDate(LocalDateTime.now())
+                .build();
+        ledger.getOrders().add(arrviedOrder);
+        ledgerService.saveLedger(ledger);
+        // 결제
+
+        for (Ledger item: ledgerService.findByDepartment(department)) {
+            for (Order item2: item.getOrders()) {
+                System.out.println(item2);
+            }
+        }
     }
 
     @Test
@@ -275,10 +317,43 @@ class OrderServiceTest {
         menu1Options.add(menuOptionService.findByMenuAndName(찜닭, "안맵게"));
         menu1Options.add(menuOptionService.findByMenuAndName(찜닭, "당면 많이"));
 
-        Menu 굴국밥 = menuService.findByName("굴국밥");
-
         Menu 공기밥 = menuService.findByName("공기밥");
-        Menu 굴파전 = menuService.findByName("굴파전");
 
+        OrderItem takeoutItem = OrderItem.builder()
+                .count(1)
+                .menuOptions(menu1Options)
+                .menu(찜닭)
+                .build();
+
+        OrderItem takeoutItem2 = OrderItem.builder()
+                .count(4)
+                .menu(공기밥)
+                .build();
+
+        orderItemService.saveOrderItem(takeoutItem);
+        orderItemService.saveOrderItem(takeoutItem2);
+        // 포장 시작
+        Order order = Order.builder()
+                .reservationContent("순희네 포장")
+                .reservationDate(LocalDateTime.now().withHour(1).withMinute(0))
+                .orderType(OrderType.TAKEOUT)
+                .orderDate(LocalDateTime.now())
+                .workStatus(WorkStatus.RESERVATION)
+                .people(4)
+                .build();
+        order.addOrderItem(takeoutItem);
+        order.addOrderItem(takeoutItem2);
+        //포장 시작
+
+        //포장 완료
+        order.setWorkStatus(WorkStatus.COOK);
+        orderService.orderCookComplete(order.getId());
+        order.setWorkStatus(WorkStatus.COMPLETE);
+        //포장 완료
+
+        //포장 결재
+        order.setPayType(PayType.CARD);
+        order.setPaymentDate(LocalDateTime.now());
+        //포장 결재
     }
 }
