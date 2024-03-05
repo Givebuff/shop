@@ -1,12 +1,8 @@
-package com.kcj.management.shop.model;
+package com.kcj.management.shop.model.order;
 
-import com.kcj.management.shop.model.order.Order;
-import com.kcj.management.shop.model.order.PayType;
 import com.kcj.management.shop.util.StringUtil;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -36,7 +32,7 @@ public class Ledger {
 
     private String htmlId;
 
-    @PostPersist
+    @PostUpdate
     public void afterSave(){
         if(htmlId == null) {
             htmlId = getClass().getSimpleName().toLowerCase() + StringUtil.DELIMITER +  String.format("%06d", id);

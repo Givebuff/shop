@@ -38,9 +38,10 @@ public class Menu {
 
     @Builder.Default
     @OneToMany(mappedBy = "menu", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OrderBy("name asc")
     private List<MenuOption> menuOptions = new ArrayList<>();
 
-    @PostPersist
+    @PostUpdate
     public void afterSave(){
         if(htmlId == null) {
             htmlId = getClass().getSimpleName().toLowerCase() + StringUtil.DELIMITER +  String.format("%06d", id);

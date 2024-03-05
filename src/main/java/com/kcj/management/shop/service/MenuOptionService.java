@@ -43,6 +43,10 @@ public class MenuOptionService {
 
     }
 
+    public List<MenuOption> findByUsedTrue() {
+        return menuOptionRepository.findByUsedTrueOrderByMenuAndName();
+    }
+
     public void unusedMenuOption(Long id){
         findById(id).setUsed(false);
     }

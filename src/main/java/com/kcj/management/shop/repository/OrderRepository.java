@@ -1,7 +1,7 @@
 package com.kcj.management.shop.repository;
 
-import com.kcj.management.shop.model.Department;
-import com.kcj.management.shop.model.Ledger;
+import com.kcj.management.shop.model.order.Department;
+import com.kcj.management.shop.model.order.Ledger;
 import com.kcj.management.shop.model.order.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 

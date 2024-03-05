@@ -1,4 +1,4 @@
-package com.kcj.management.shop.model;
+package com.kcj.management.shop.model.order;
 
 import jakarta.persistence.*;
 import lombok.*;

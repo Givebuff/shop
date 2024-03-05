@@ -1,7 +1,5 @@
 package com.kcj.management.shop.model.order;
 
-import com.kcj.management.shop.model.Department;
-import com.kcj.management.shop.model.Ledger;
 import com.kcj.management.shop.util.StringUtil;
 import jakarta.persistence.*;
 import lombok.*;
@@ -61,7 +59,7 @@ public class Order {
 
     private String htmlId;
 
-    @PostPersist
+    @PostUpdate
     public void afterSave(){
         if(htmlId == null) {
             htmlId = getClass().getSimpleName().toLowerCase() + StringUtil.DELIMITER +  String.format("%06d", id);

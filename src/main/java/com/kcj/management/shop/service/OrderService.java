@@ -1,7 +1,7 @@
 package com.kcj.management.shop.service;
 
 import com.kcj.management.shop.exception.IdNotFoundException;
-import com.kcj.management.shop.model.Department;
+import com.kcj.management.shop.model.order.Department;
 import com.kcj.management.shop.model.order.*;
 import com.kcj.management.shop.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;

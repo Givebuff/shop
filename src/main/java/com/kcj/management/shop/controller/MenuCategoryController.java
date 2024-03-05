@@ -2,13 +2,14 @@ package com.kcj.management.shop.controller;
 
 import com.kcj.management.shop.model.menu.MenuCategory;
 import com.kcj.management.shop.service.MenuCategoryService;
+import com.kcj.management.shop.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 public class MenuCategoryController {
@@ -28,12 +29,13 @@ public class MenuCategoryController {
         menuCategory.setName(name);
         menuCategoryService.saveMenuCategory(menuCategory);
 
-        return "redirect:/menu/category/manage";
+        return "redirect:/menu";
     }
 
     @GetMapping("/menu/category/manage")
     public String menuCategoryManagePage(Model model){
-        model.addAttribute("menuCategories", menuCategoryService.findByUsedTrue());
+        List<MenuCategory> categories = menuCategoryService.findByUsedTrue();
+        model.addAttribute("menuCategories", categories);
         return "/menu/category/manage";
     }
 
@@ -44,21 +46,13 @@ public class MenuCategoryController {
     }
 
     @PostMapping("/menu/category/change")
+    @Transactional
     public String menuCategoryChangePage(
             @RequestParam("id") Long id,
             @RequestParam("name") String name
     ) {
         MenuCategory menuCategory = menuCategoryService.findById(id);
         menuCategory.setName(name);
-        menuCategoryService.saveMenuCategory(menuCategory);
-        return "redirect:/menu/category/manage";
-    }
-
-    @PostMapping("/menu/category/delete/{id}")
-    public String menuCategoryDelete(
-            @PathVariable("id") Long id
-    ) {
-        menuCategoryService.unusedMenuCategory(id);
-        return "redirect:/menu/category/manage";
+        return "redirect:/menu";
     }
 }

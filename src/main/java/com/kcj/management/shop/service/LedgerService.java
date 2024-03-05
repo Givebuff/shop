@@ -1,8 +1,8 @@
 package com.kcj.management.shop.service;
 
 import com.kcj.management.shop.exception.NotExistException;
-import com.kcj.management.shop.model.Department;
-import com.kcj.management.shop.model.Ledger;
+import com.kcj.management.shop.model.order.Department;
+import com.kcj.management.shop.model.order.Ledger;
 import com.kcj.management.shop.repository.LedgerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

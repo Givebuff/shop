@@ -1,7 +1,7 @@
 package com.kcj.management.shop.service;
 
-import com.kcj.management.shop.model.Department;
-import com.kcj.management.shop.model.Ledger;
+import com.kcj.management.shop.model.order.Department;
+import com.kcj.management.shop.model.order.Ledger;
 import com.kcj.management.shop.model.menu.Menu;
 import com.kcj.management.shop.model.menu.MenuCategory;
 import com.kcj.management.shop.model.menu.MenuOption;
@@ -16,8 +16,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @DataJpaTest

@@ -8,6 +8,7 @@
     <meta name="author" content="">
     <link th:href="@{/css/output.css}" rel="stylesheet" type="text/css">
     <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+    <script th:src="@{/js/rest.js}"></script>
 </head>
 <body>
 <!--
@@ -17,9 +18,8 @@
 <div class="min-h-screen bg-gray-100 p-5">
     <div class="max-w-4xl mx-auto overflow-hidden bg-white shadow sm:rounded-lg">
         <div class="px-4 py-5 sm:px-6 bg-black rounded-lg">
-            <h3 class="text-2xl font-semibold leading-6 font-medium text-center text-white">Title</h3>
+            <a th:href="@{/}"><h3 class="text-2xl font-semibold leading-6 font-medium text-center text-white">카테고리 관리</h3></a>
         </div>
-        <hr class="h-4 mx-autobg-gray-100 border-0 rounded md:my-10 dark:bg-gray-700">
         <div class="relative w-full overflow-auto">
             <table class="w-full caption-bottom">
                 <thead class="[&amp;_tr]:border-b">
@@ -40,14 +40,14 @@
                 </thead>
                 <tbody class="[&amp;_tr:last-child]:border-0" th:each="menuCategory, idx : ${menuCategories}">
                 <tr th:if="${idx.index % 2 == 0}" class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-                    <td rowspan="3" class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 bg-blue-200" th:text="${menuCategory.id}">ID</td>
+                    <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 bg-blue-200" th:text="${menuCategory.id}">ID</td>
                     <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 bg-blue-200" th:text="${menuCategory.name}">Name</td>
                     <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 bg-blue-200">
                         <a class="p-2 align-middle bg-green-500 text-white rounded-lg shadow"
                            th:href="@{/menu/category/change/} + ${menuCategory.id}" >수정</a></td>
                     <td rowspan="3" class="p-4 align-middle [&amp;:has([role=checkbox])]:ㄴpr-0 bg-blue-200">
-                        <a class="p-2 align-middle bg-green-500 text-white rounded-lg shadow"
-                           th:href="@{/menu/category/delete/} + ${menuCategory.id}" >삭제</a>
+                        <button class="p-2 align-middle bg-green-500 text-white rounded-lg shadow"
+                           th:onclick="'menuCategoryDelete(' + ${menuCategory.id} + ')'" >삭제</button>
                     </td>
                 </tr>
                 <tr th:if="${idx.index % 2 != 0}" class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
@@ -57,26 +57,10 @@
                         <a class="p-2 align-middle bg-green-500 text-white rounded-lg shadow"
                            th:href="@{/menu/category/change/} + ${menuCategory.id}" >수정</a></td></td>
                     <td class="p-4 align-middle [&amp;:has([role=checkbox])]:ㄴpr-0 bg-yellow-200">
-                        <a class="p-2 align-middle bg-green-500 text-white rounded-lg shadow"
-                           th:href="@{/menu/category/delete/} + ${menuCategory.id}" >삭제</a>
+                        <button class="p-2 align-middle bg-green-500 text-white rounded-lg shadow"
+                           th:onclick="'menuCategoryDelete(' + ${menuCategory.id} + ')'"  >삭제</button>
                     </td>
                 </tr>
-<!--                <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">-->
-<!--                    <td rowspan="3" class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 bg-blue-200">배달</td>-->
-<!--                    <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 bg-blue-200">메뉴1(옵션)</td>-->
-<!--                    <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 bg-blue-200">1</td>-->
-<!--                    <td rowspan="3" class="p-4 align-middle [&amp;:has([role=checkbox])]:ㄴpr-0 bg-blue-200">-->
-<!--                        <button class="p-2 align-middle bg-green-500 text-white rounded-lg shadow">완료</button>-->
-<!--                    </td>-->
-<!--                </tr>-->
-<!--                <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">-->
-<!--                    <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 bg-yellow-200">2</td>-->
-<!--                    <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 bg-yellow-200">메뉴2</td>-->
-<!--                    <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 bg-yellow-200">3</td>-->
-<!--                    <td class="p-4 align-middle [&amp;:has([role=checkbox])]:ㄴpr-0 bg-blue-200">-->
-<!--                        <button class="p-2 align-middle bg-green-500 text-white rounded-lg shadow">완료</button>-->
-<!--                    </td>-->
-<!--                </tr>-->
                 </tbody>
             </table>
         </div>

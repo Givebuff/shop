@@ -4,9 +4,8 @@ import com.kcj.management.shop.util.StringUtil;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.PostPersist;
+import jakarta.persistence.PostUpdate;
 import lombok.*;
-import org.springframework.boot.context.properties.bind.DefaultValue;
 
 @Entity
 @Getter
@@ -26,7 +25,7 @@ public class MenuCategory {
 
     private String htmlId;
 
-    @PostPersist
+    @PostUpdate
     public void afterSave(){
         if(htmlId == null) {
             htmlId = getClass().getSimpleName().toLowerCase() + StringUtil.DELIMITER +  String.format("%06d", id);

@@ -3,6 +3,7 @@ package com.kcj.management.shop.service;
 import com.kcj.management.shop.exception.IdNotFoundException;
 import com.kcj.management.shop.model.menu.Menu;
 import com.kcj.management.shop.model.menu.MenuCategory;
+import com.kcj.management.shop.model.menu.MenuOption;
 import com.kcj.management.shop.repository.MenuRepository;
 import com.kcj.management.shop.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +16,6 @@ import java.util.Optional;
 public class MenuService {
     @Autowired
     private MenuRepository menuRepository;
-    @Autowired
-    private MenuCategoryService menuCategoryService;
 
     public void saveMenu(Menu menu){
         menuRepository.save(menu);
@@ -45,6 +44,24 @@ public class MenuService {
     }
     public List<Menu> findByNameLike(String name) {
         return menuRepository.findByNameLikeAndUsedTrue(StringUtil.likeDelimiterString(name, 0));
+    }
+
+    public List<Menu> findByUsedTrue() {
+        return menuRepository.findByUsedTrueOrderByMenuCategoryAndName();
+    }
+
+    public void changeMenu(Long preId, Long postId) {
+        Menu preMenu = findById(preId);
+        Menu postMenu = findById(postId);
+
+        List<MenuOption> options = preMenu.getMenuOptions();
+
+        preMenu.setMenuOptions(null);
+
+        for (MenuOption option: options) {
+            option.setMenu(postMenu);
+            postMenu.getMenuOptions().add(option);
+        }
     }
 
     public void unusedMenu(Long id){

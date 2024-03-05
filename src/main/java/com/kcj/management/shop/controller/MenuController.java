@@ -7,6 +7,7 @@ import com.kcj.management.shop.service.MenuService;
 import com.kcj.management.shop.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,17 +27,16 @@ public class MenuController {
     }
     @GetMapping("/menu/registry")
     public String menuRegistryPage(Model model){
-        model.addAttribute("categories", menuCategoryService.findAll());
-
+        model.addAttribute("menuCategories", menuCategoryService.findByUsedTrue());
         return "/menu/registry";
     }
 
     @PostMapping("/menu/registry")
     public String menuRegistry(
-            @RequestParam Long categoryId,
-            @RequestParam String name,
-            @RequestParam String price,
-            @RequestParam String content
+            @RequestParam("category") Long categoryId,
+            @RequestParam("name") String name,
+            @RequestParam("price") String price,
+            @RequestParam("content") String content
             ){
         menuService.saveMenu(
                 Menu.builder()
@@ -52,16 +52,18 @@ public class MenuController {
     @GetMapping("/menu/change/{id}")
     public String changeMenuPage(@PathVariable("id") Long id, Model model){
         model.addAttribute("menu", menuService.findById(id));
+        model.addAttribute("menuCategories", menuCategoryService.findByUsedTrue());
         return "/menu/change";
     }
 
     @PostMapping("/menu/change")
+    @Transactional
     public String changeMenu(
-            @RequestParam Long id,
-            @RequestParam Long categoryId,
-            @RequestParam String name,
-            @RequestParam String price,
-            @RequestParam String content){
+            @RequestParam("id") Long id,
+            @RequestParam("category") Long categoryId,
+            @RequestParam("name") String name,
+            @RequestParam("price") String price,
+            @RequestParam("content") String content){
 
         Menu preMenu = menuService.findById(id);
         Menu menu = Menu.builder()
@@ -69,12 +71,18 @@ public class MenuController {
                 .menuCategory(menuCategoryService.findById(categoryId))
                 .price(StringUtil.priceToInt(price))
                 .content(content)
-                .menuOptions(preMenu.getMenuOptions())
                 .build();
 
         menuService.unusedMenu(preMenu.getId());
         menuService.saveMenu(menu);
+        menuService.changeMenu(preMenu.getId(), menu.getId());
 
         return "redirect:/menu";
+    }
+
+    @GetMapping("/menu/manage")
+    public String menuManagePage(Model model){
+        model.addAttribute("menus", menuService.findByUsedTrue());
+        return "/menu/manage";
     }
 }
