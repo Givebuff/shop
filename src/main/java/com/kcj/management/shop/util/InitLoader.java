@@ -3,23 +3,31 @@ package com.kcj.management.shop.util;
 import com.kcj.management.shop.model.menu.Menu;
 import com.kcj.management.shop.model.menu.MenuCategory;
 import com.kcj.management.shop.model.menu.MenuOption;
+import com.kcj.management.shop.model.order.*;
 import com.kcj.management.shop.model.staff.Staff;
 import com.kcj.management.shop.model.staff.StaffRole;
 import com.kcj.management.shop.repository.StaffRepository;
-import com.kcj.management.shop.service.MenuCategoryService;
-import com.kcj.management.shop.service.MenuOptionService;
-import com.kcj.management.shop.service.MenuService;
+import com.kcj.management.shop.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 public class InitLoader implements CommandLineRunner {
     @Autowired private MenuCategoryService menuCategoryService;
     @Autowired private MenuService menuService;
     @Autowired private MenuOptionService menuOptionService;
+    @Autowired private DepartmentService departmentService;
+    @Autowired private OrderService orderService;
+    @Autowired private OrderItemService orderItemService;
+    @Autowired private LedgerService ledgerService;
+    @Autowired private AddressService addressService;
     @Value("${spring.jpa.hibernate.ddl-auto}")
     private String ddlValue;
 
@@ -29,6 +37,10 @@ public class InitLoader implements CommandLineRunner {
         initMenuCategories();
         initMenus();
         initMenuOptions();
+        initDepartment();
+        initHoleOrder();
+//        initDeliveryOrder();
+//        initReservationOrder();
     }
 
     private void initMenuCategories() {
@@ -182,5 +194,149 @@ public class InitLoader implements CommandLineRunner {
                 .name("당면많이")
                 .content("당면많이")
                 .build());
+    }
+
+    private void initDepartment() {
+        departmentService.saveDepartment(
+                Department.builder()
+                        .section("환경과")
+                        .dept("환경부")
+                        .build()
+        );
+        departmentService.saveDepartment(
+                Department.builder()
+                        .section("환경과")
+                        .dept("환경개선부")
+                        .build()
+        );
+        departmentService.saveDepartment(
+                Department.builder()
+                        .section("시설과")
+                        .dept("시설부")
+                        .build()
+        );
+        departmentService.saveDepartment(
+                Department.builder()
+                        .section("시설과")
+                        .dept("부품지원부")
+                        .build()
+        );
+        departmentService.saveDepartment(
+                Department.builder()
+                        .section("시설과")
+                        .dept("시설환경부")
+                        .build()
+        );
+        departmentService.saveDepartment(
+                Department.builder()
+                        .section("민원과")
+                        .dept("민원부")
+                        .build()
+        );
+    }
+
+    private void initHoleOrder() {
+        Menu 찜닭 = menuService.findByName("안동찜닭");
+        List<MenuOption> menu1Options = new ArrayList<>();
+        menu1Options.add(menuOptionService.findByMenuAndName(찜닭, "안맵게"));
+        menu1Options.add(menuOptionService.findByMenuAndName(찜닭, "당면많이"));
+
+        Menu 굴국밥 = menuService.findByName("굴국밥");
+
+        OrderItem holeItem = OrderItem.builder()
+                .menu(찜닭)
+                .menuOptions(menu1Options)
+                .count(2).build();
+
+        OrderItem holeItem2 = OrderItem.builder()
+                .menu(굴국밥)
+                .count(8)
+                .build();
+
+        orderItemService.saveOrderItem(holeItem);
+        orderItemService.saveOrderItem(holeItem2);
+
+        // 홀 주문 시작
+        Order order = Order.builder()
+                .orderType(OrderType.HOLE)
+                .orderDate(LocalDateTime.now())
+                .workStatus(WorkStatus.COOK)
+                .tableNum(4)
+                .build();
+        order.addOrderItem(holeItem);
+        order.addOrderItem(holeItem2);
+
+        orderService.saveOrder(order);
+    }
+
+    private void initDeliveryOrder() {
+        Menu 찜닭 = menuService.findByName("안동찜닭");
+        List<MenuOption> menu1Options = new ArrayList<>();
+        menu1Options.add(menuOptionService.findByMenuAndName(찜닭, "안맵게"));
+
+        Menu 공기밥 = menuService.findByName("공기밥");
+
+        OrderItem deliveryItem = OrderItem.builder()
+                .menu(찜닭)
+                .menuOptions(menu1Options)
+                .count(1).build();
+
+        OrderItem deliveryItem2 = OrderItem.builder()
+                .menu(공기밥)
+                .count(4).build();
+
+        orderItemService.saveOrderItem(deliveryItem);
+        orderItemService.saveOrderItem(deliveryItem2);
+
+        //배달 주문 시작
+        Address address = new Address();
+        address.setAddress("독산 스타벅스");
+        address.setDetail("큰 테이블");
+        address.setPhoneNumber("01032240276");
+        addressService.saveAddress(address);
+
+        Order deliveryOrder = Order.builder()
+                .orderType(OrderType.DELIVERY)
+                .orderDate(LocalDateTime.now())
+                .workStatus(WorkStatus.COOK)
+                .address(address)
+                .build();
+        deliveryOrder.addOrderItem(deliveryItem);
+        deliveryOrder.addOrderItem(deliveryItem2);
+
+        orderService.saveOrder(deliveryOrder);
+        // 배달 주문 종료
+    }
+
+    private void initReservationOrder() {
+        Menu 굴국밥 = menuService.findByName("굴국밥");
+        Menu 굴파전 = menuService.findByName("굴파전");
+
+        OrderItem reservationItem = OrderItem.builder()
+                .menu(굴파전)
+                .count(2).build();
+
+        OrderItem reservationItem2 = OrderItem.builder()
+                .menu(굴국밥)
+                .count(4).build();
+        orderItemService.saveOrderItem(reservationItem);
+        orderItemService.saveOrderItem(reservationItem2);
+
+        // 예약 시작
+        Department department = departmentService.findBySectionAndDepartment("환경과", "환경부");
+        Order order = Order.builder()
+                .orderDate(LocalDateTime.now())
+                .orderType(OrderType.RESERVATION)
+                .tableNum(3)
+                .people(4)
+                .reservationDate(LocalDateTime.now().withHour(12).withMinute(0))
+                .workStatus(WorkStatus.RESERVATION)
+                .department(department)
+                .build();
+        order.addOrderItem(reservationItem);
+        order.addOrderItem(reservationItem2);
+
+        orderService.saveOrder(order);
+        // 예약 시작
     }
 }

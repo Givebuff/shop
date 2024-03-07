@@ -53,7 +53,7 @@ public class Order {
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime paymentDate;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "order", cascade = CascadeType.REMOVE)
     @Builder.Default
     private List<OrderItem> orderItems = new ArrayList<>();
 

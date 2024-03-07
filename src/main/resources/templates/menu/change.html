@@ -32,6 +32,7 @@
                             data-state="closed"
                             data-placeholder=""
                             th:value="${menu.menuCategory.id}"
+                            required
                             class="flex h-10 items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 w-[180px]">
                         <option
                                 th:each="menuCategory : ${menuCategories}" th:value="${menuCategory.id}" th:text="${menuCategory.name}">없음</option>
@@ -43,7 +44,7 @@
                         메뉴 명
                     </label>
                     <input class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                           id="name" name="name" th:value="${menu.name}" placeholder="메뉴 명">
+                           id="name" name="name" required th:value="${menu.name}" placeholder="메뉴 명">
                 </div>
                 <div class="flex flex-col gap-1">
                     <label class="font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-sm"
@@ -51,15 +52,15 @@
                         가격
                     </label>
                     <input class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                           id="price" name="price" th:value="${menu.price}" placeholder="가격" type="number">
+                           id="price" name="price" required th:value="${menu.price}" placeholder="가격" type="number">
                 </div>
                 <div class="flex flex-col gap-1">
                     <label class="font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-sm"
                            for="content">
-                        설명(미 작성시 메뉴 명과 동일)
+                        설명
                     </label>
                     <input class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                           id="content" name="content" th:value="${menu.content}" placeholder="설명">
+                           id="content" name="content" required th:value="${menu.content}" placeholder="설명">
                 </div>
                 <button class="bg-blue-500 text-white inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2"
                         type="submit">

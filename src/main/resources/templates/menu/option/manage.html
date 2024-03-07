@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link th:href="@{/css/output.css}" rel="stylesheet" type="text/css">
+    <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+    <script th:src="@{/js/rest.js}"></script>
+</head>
+<body>
+<!--
+// v0 by Vercel.
+// https://v0.dev/t/V704ue2cS2v
+-->
+<div class="min-h-screen bg-gray-100 p-5">
+    <div class="max-w-4xl mx-auto overflow-hidden bg-white shadow sm:rounded-lg">
+        <div class="px-4 py-5 sm:px-6 bg-black rounded-lg">
+            <a th:href="@{/}"><h3 class="text-2xl font-semibold leading-6 font-medium text-center text-white">메뉴 옵션 관리</h3></a>
+        </div>
+        <div class="relative w-full overflow-auto">
+            <table class="w-full caption-bottom">
+                <thead class="[&amp;_tr]:border-b">
+                <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                    <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0 bg-gray-300">
+                        메뉴 명
+                    </th>
+                    <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0 bg-gray-300">
+                        옵션 명
+                    </th>
+                    <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0 bg-gray-300">
+                        설명
+                    </th>
+                    <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0 bg-gray-300">
+                        가격
+                    </th>
+                    <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0 bg-gray-300">
+                        수정
+                    </th>
+                    <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0 bg-gray-300">
+                        삭제
+                    </th>
+                </tr>
+                </thead>
+                <tbody class="[&amp;_tr:last-child]:border-0" th:each="menuOption, idx : ${menuOptions}">
+                <tr th:if="${idx.index % 2 == 0}" class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                    <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 bg-blue-200" th:text="${menuOption.menu.name}">메뉴 명</td>
+                    <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 bg-blue-200" th:text="${menuOption.name}">옵션 명</td>
+                    <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 bg-blue-200" th:text="${menuOption.content}">설명</td>
+                    <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 bg-blue-200" th:text="${menuOption.price}">가격</td>
+                    <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 bg-blue-200">
+                        <a class="p-2 align-middle bg-green-500 text-white rounded-lg shadow"
+                           th:href="@{/menu/option/change/} + ${menuOption.id}" >수정</a></td>
+                    <td rowspan="3" class="p-4 align-middle [&amp;:has([role=checkbox])]:ㄴpr-0 bg-blue-200">
+                        <button class="p-2 align-middle bg-green-500 text-white rounded-lg shadow"
+                                th:onclick="'menuOptionDelete(' + ${menuOption.id} + ')'" >삭제</button>
+                    </td>
+                </tr>
+                <tr th:if="${idx.index % 2 != 0}" class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                    <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 bg-yellow-200" th:text="${menuOption.menu.name}">메뉴 명</td>
+                    <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 bg-yellow-200" th:text="${menuOption.name}">카테고리 명</td>
+                    <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 bg-yellow-200" th:text="${menuOption.content}">설명</td>
+                    <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 bg-yellow-200" th:text="${menuOption.price}">가격</td>
+                    <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 bg-yellow-200">
+                        <a class="p-2 align-middle bg-green-500 text-white rounded-lg shadow"
+                           th:href="@{/menu/option/change/} + ${menuOption.id}" >수정</a></td></td>
+                    <td class="p-4 align-middle [&amp;:has([role=checkbox])]:ㄴpr-0 bg-yellow-200">
+                        <button class="p-2 align-middle bg-green-500 text-white rounded-lg shadow"
+                                th:onclick="'menuOptionDelete(' + ${menuOption.id} + ')'"  >삭제</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>
