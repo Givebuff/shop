@@ -14,9 +14,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Menu {
-//    @Id @GeneratedValue
-//    private Long id;
-
     @Id
     @GeneratedValue
     private Long id;

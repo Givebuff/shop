@@ -79,4 +79,8 @@ public class OrderService {
     public List<Order> findByAddress(Address address) {
         return orderRepository.findByAddress(address);
     }
+
+    public List<Order> todayOrderList() {
+        return orderRepository.todayOrderList();
+    }
 }
