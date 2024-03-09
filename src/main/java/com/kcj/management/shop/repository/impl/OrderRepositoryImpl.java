@@ -1,14 +1,13 @@
 package com.kcj.management.shop.repository.impl;
 
+import com.kcj.management.shop.model.dto.order.OrderDTO;
 import com.kcj.management.shop.model.order.Order;
 import com.kcj.management.shop.model.order.QOrder;
 import com.kcj.management.shop.repository.custom.OrderRepositoryCustom;
-import com.kcj.management.shop.util.DateUtil;
+import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQuery;
-import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 public class OrderRepositoryImpl implements OrderRepositoryCustom {
@@ -23,9 +22,20 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
         JPAQuery<Order> query = new JPAQuery<>(queryManager);
         QOrder qOrder = QOrder.order;
 
-        return query.from(qOrder)
-                .where(qOrder.reservationDate.coalesce(qOrder.orderDate)
-                        .between(DateUtil.todayStartDateTime(), DateUtil.todayEndDateTime()))
+        return query
+                .from(qOrder)
+                .fetch();
+    }
+
+    @Override
+    public List<OrderDTO> todayOrderTodayDTOList(){
+        JPAQuery<OrderDTO> query = new JPAQuery<>(queryManager);
+        QOrder qOrder = QOrder.order;
+
+
+        return query.select(Projections.fields(OrderDTO.class
+                , qOrder.id, qOrder.tableNum, qOrder.orderItems))
+                .from(qOrder)
                 .fetch();
     }
 }

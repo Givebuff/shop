@@ -1,6 +1,7 @@
 package com.kcj.management.shop.service;
 
 import com.kcj.management.shop.exception.IdNotFoundException;
+import com.kcj.management.shop.model.dto.order.OrderDTO;
 import com.kcj.management.shop.model.order.Department;
 import com.kcj.management.shop.model.order.*;
 import com.kcj.management.shop.repository.OrderRepository;
@@ -27,6 +28,10 @@ public class OrderService {
         } else {
             throw new IdNotFoundException(getClass().getName());
         }
+    }
+
+    public List<Order> findAll(){
+        return orderRepository.findAll();
     }
 
     public List<Order> findByPayType(PayType payType) {
@@ -83,4 +88,6 @@ public class OrderService {
     public List<Order> todayOrderList() {
         return orderRepository.todayOrderList();
     }
+
+    public List<OrderDTO> orderTodayDTOS() {return orderRepository.todayOrderTodayDTOList();}
 }

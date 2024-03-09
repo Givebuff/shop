@@ -1,5 +1,6 @@
 package com.kcj.management.shop.model.order;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.kcj.management.shop.util.StringUtil;
 import jakarta.persistence.*;
 import lombok.*;
@@ -91,15 +92,15 @@ public class Order {
                 .findAny().ifPresent(findItem -> orderItems.remove(orderItem));
     }
 
-    @Override
-    public String toString(){
-        String result = StringUtil.toStringHeader(getClass().getSimpleName());
-
-        for(OrderItem item: orderItems){
-            result += item.toString();
-        }
-
-        result += "총 : " + getTotalPrice() + "원\n" + StringUtil.toStringFooter(getClass().getSimpleName());
-        return result;
-    }
+//    @Override
+//    public String toString(){
+//        String result = StringUtil.toStringHeader(getClass().getSimpleName());
+//
+//        for(OrderItem item: orderItems){
+//            result += item.toString();
+//        }
+//
+//        result += "총 : " + getTotalPrice() + "원\n" + StringUtil.toStringFooter(getClass().getSimpleName());
+//        return result;
+//    }
 }

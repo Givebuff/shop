@@ -13,12 +13,14 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
+@Transactional
 public class InitLoader implements CommandLineRunner {
     @Autowired private MenuCategoryService menuCategoryService;
     @Autowired private MenuService menuService;
@@ -237,21 +239,20 @@ public class InitLoader implements CommandLineRunner {
 
     private void initHoleOrder() {
         Menu 찜닭 = menuService.findByName("안동찜닭");
-        List<MenuOption> menu1Options = new ArrayList<>();
-        menu1Options.add(menuOptionService.findByMenuAndName(찜닭, "안맵게"));
-        menu1Options.add(menuOptionService.findByMenuAndName(찜닭, "당면많이"));
-
         Menu 굴국밥 = menuService.findByName("굴국밥");
 
         OrderItem holeItem = OrderItem.builder()
                 .menu(찜닭)
-                .menuOptions(menu1Options)
-                .count(2).build();
+                .count(2)
+                .build();
 
         OrderItem holeItem2 = OrderItem.builder()
                 .menu(굴국밥)
                 .count(8)
                 .build();
+
+        holeItem.getMenuOptions().add(menuOptionService.findByMenuAndName(찜닭, "안맵게"));
+        holeItem.getMenuOptions().add(menuOptionService.findByMenuAndName(찜닭, "당면많이"));
 
         orderItemService.saveOrderItem(holeItem);
         orderItemService.saveOrderItem(holeItem2);
@@ -267,6 +268,9 @@ public class InitLoader implements CommandLineRunner {
         order.addOrderItem(holeItem2);
 
         orderService.saveOrder(order);
+
+        holeItem.setOrder(order);
+        holeItem2.setOrder(order);
     }
 
     private void initDeliveryOrder() {
