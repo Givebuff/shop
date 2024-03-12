@@ -38,7 +38,7 @@ public class OrderItem {
     @Builder.Default
     private boolean complete = false;
 
-    @PostUpdate
+    @PostPersist
     public void afterSave(){
         if(htmlId == null) {
             htmlId = getClass().getSimpleName().toLowerCase() + StringUtil.DELIMITER +  String.format("%06d", id);

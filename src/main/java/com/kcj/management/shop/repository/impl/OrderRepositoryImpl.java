@@ -4,6 +4,7 @@ import com.kcj.management.shop.model.dto.order.OrderDTO;
 import com.kcj.management.shop.model.order.*;
 import com.kcj.management.shop.repository.custom.OrderRepositoryCustom;
 import com.kcj.management.shop.util.DateUtil;
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.ConstructorExpression;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.QBean;
@@ -11,6 +12,9 @@ import com.querydsl.jpa.impl.JPAQuery;
 import jakarta.persistence.EntityManager;
 
 import java.util.List;
+
+import static com.querydsl.core.group.GroupBy.groupBy;
+import static com.querydsl.core.group.GroupBy.list;
 
 public class OrderRepositoryImpl implements OrderRepositoryCustom {
     private final EntityManager queryManager;
@@ -22,56 +26,22 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
     @Override
     public List<Order> todayOrderList() {
         JPAQuery<Order> query = new JPAQuery<>(queryManager);
-        QOrder qOrder = QOrder.order;
+        QOrder order = QOrder.order;
+        BooleanBuilder builder = new BooleanBuilder();
+        builder.and(order.workStatus.ne(WorkStatus.COMPLETE))
+                .and(order.payType.isNotNull())
+                .or(order.payType.isNull());
 
-        return query
-                .from(qOrder)
+        return query.from(order)
+                .where(order.reservationDate.coalesce(order.orderDate)
+                        .between(DateUtil.todayStartDateTime(), DateUtil.todayEndDateTime())
+                        .and(builder)
+                )
                 .fetch();
     }
 
     @Override
     public List<OrderDTO> todayOrderTodayDTOList(){
         return OrderDTO.orderDTOList(todayOrderList());
-    }
-
-    @Override
-    public List<OrderDTO> testDTO() {
-        JPAQuery<OrderDTO> query = new JPAQuery<>(queryManager);
-        QOrder order = QOrder.order;
-        QDepartment department= QDepartment.department;
-        QLedger ledger = QLedger.ledger;
-        QAddress address = QAddress.address1;
-        QOrderItem orderItem = QOrderItem.orderItem;
-
-        return query.select(orderDTOFields(order))
-                .from(order)
-                .leftJoin(order.department, department)
-                .leftJoin(order.ledger, ledger)
-                .leftJoin(order.address, address)
-                .join(order.orderItems, orderItem)
-                .where(order.reservationDate.coalesce(
-                        order.orderDate).between(DateUtil.todayStartDateTime(),DateUtil.todayEndDateTime()))
-                .fetch();
-    }
-
-    private QBean<OrderDTO> orderDTOFields(QOrder order) {
-        return Projections.fields(OrderDTO.class,
-                order.id, order.tableNum, order.reservationContent,
-                order.people, order.orderType, order.workStatus,
-                order.orderDate, order.reservationDate, order.orderItems.as("orderItem"));
-    }
-
-    private QBean<OrderDTO> orderDTOBean(QOrder order) {
-        return Projections.bean(OrderDTO.class,
-                order.id, order.tableNum, order.reservationContent,
-                order.people, order.orderType, order.workStatus,
-                order.orderDate, order.reservationDate, order.orderItems.as("orderItem"));
-    }
-
-    private ConstructorExpression<OrderDTO> orderDTOConstructor(QOrder order) {
-        return Projections.constructor(OrderDTO.class,
-                order.id, order.tableNum, order.reservationContent,
-                order.people, order.orderType, order.workStatus,
-                order.orderDate, order.reservationDate, order.orderItems.as("orderItem"));
     }
 }

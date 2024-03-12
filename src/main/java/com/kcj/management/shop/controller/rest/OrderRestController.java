@@ -1,7 +1,5 @@
 package com.kcj.management.shop.controller.rest;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
 import com.kcj.management.shop.model.dto.order.OrderDTO;
 import com.kcj.management.shop.model.order.Order;
 import com.kcj.management.shop.service.OrderService;
@@ -17,20 +15,9 @@ public class OrderRestController {
 
     @GetMapping("/rest/order/today")
     public List<Order> getTodayOrderList() {
-        List<Order> orders = orderService.findAll();
-        System.out.println("This is flag");
-        System.out.println(orders.size());
-        System.out.println("////////////////////////////////////////////////");
-        System.out.println(orders);
-
-        return orders;
+        return orderService.todayOrderList();
     }
 
     @GetMapping("/rest/order/today/dto")
     public List<OrderDTO> getOrderTodayDTOList(){return orderService.orderTodayDTOS();}
-
-    @GetMapping("/rest/order/dto/test")
-    public List<OrderDTO> getOrderDTOTest(){
-        return orderService.orderDTOTest();
-    }
 }

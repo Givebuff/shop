@@ -90,6 +90,4 @@ public class OrderService {
     }
 
     public List<OrderDTO> orderTodayDTOS() {return orderRepository.todayOrderTodayDTOList();}
-
-    public List<OrderDTO> orderDTOTest() {return orderRepository.testDTO();}
 }

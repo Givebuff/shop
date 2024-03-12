@@ -1,10 +1,7 @@
 package com.kcj.management.shop.model.menu;
 
 import com.kcj.management.shop.util.StringUtil;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.PostUpdate;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
@@ -25,7 +22,7 @@ public class MenuCategory {
 
     private String htmlId;
 
-    @PostUpdate
+    @PostPersist
     public void afterSave(){
         if(htmlId == null) {
             htmlId = getClass().getSimpleName().toLowerCase() + StringUtil.DELIMITER +  String.format("%06d", id);

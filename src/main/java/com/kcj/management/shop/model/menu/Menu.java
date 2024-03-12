@@ -40,7 +40,7 @@ public class Menu {
     @JsonManagedReference
     private List<MenuOption> menuOptions = new ArrayList<>();
 
-    @PostUpdate
+    @PostPersist
     public void afterSave(){
         if(htmlId == null) {
             htmlId = getClass().getSimpleName().toLowerCase() + StringUtil.DELIMITER +  String.format("%06d", id);
