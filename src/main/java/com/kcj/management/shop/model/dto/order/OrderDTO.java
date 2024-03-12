@@ -4,6 +4,7 @@ import com.kcj.management.shop.model.order.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -20,5 +21,25 @@ public class OrderDTO {
     private WorkStatus workStatus;
     private LocalDateTime orderDate;
     private LocalDateTime reservationDate;
-    private List<OrderItem> orderItems;
+    private List<OrderItem> orderItems = new ArrayList<>();
+
+    public OrderDTO(Order order) {
+        id = order.getId();
+        tableNum = order.getTableNum();
+        reservationContent = order.getReservationContent();
+        people = order.getPeople();
+        orderType = order.getOrderType();
+        workStatus = order.getWorkStatus();
+        orderDate = order.getOrderDate();
+        reservationDate = order.getReservationDate();
+        orderItems = order.getOrderItems();
+    }
+
+    public static List<OrderDTO> orderDTOList(List<Order> orders) {
+        List<OrderDTO> orderDTOList = new ArrayList<>();
+        for (Order order: orders) {
+            orderDTOList.add(new OrderDTO(order));
+        }
+        return orderDTOList;
+    }
 }

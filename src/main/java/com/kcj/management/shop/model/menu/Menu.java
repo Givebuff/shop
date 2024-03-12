@@ -1,7 +1,6 @@
 package com.kcj.management.shop.model.menu;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.kcj.management.shop.util.StringUtil;
 import jakarta.persistence.*;
 import lombok.*;
@@ -15,7 +14,6 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
 public class Menu {
     @Id
     @GeneratedValue
@@ -39,6 +37,7 @@ public class Menu {
     @Builder.Default
     @OneToMany(mappedBy = "menu", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @OrderBy("name asc")
+    @JsonManagedReference
     private List<MenuOption> menuOptions = new ArrayList<>();
 
     @PostUpdate

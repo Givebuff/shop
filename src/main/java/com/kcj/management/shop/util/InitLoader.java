@@ -41,8 +41,8 @@ public class InitLoader implements CommandLineRunner {
         initMenuOptions();
         initDepartment();
         initHoleOrder();
-//        initDeliveryOrder();
-//        initReservationOrder();
+        initDeliveryOrder();
+        initReservationOrder();
     }
 
     private void initMenuCategories() {
@@ -309,6 +309,9 @@ public class InitLoader implements CommandLineRunner {
         deliveryOrder.addOrderItem(deliveryItem2);
 
         orderService.saveOrder(deliveryOrder);
+
+        deliveryItem.setOrder(deliveryOrder);
+        deliveryItem2.setOrder(deliveryOrder);
         // 배달 주문 종료
     }
 
@@ -341,6 +344,9 @@ public class InitLoader implements CommandLineRunner {
         order.addOrderItem(reservationItem2);
 
         orderService.saveOrder(order);
+
+        reservationItem.setOrder(order);
+        reservationItem2.setOrder(order);
         // 예약 시작
     }
 }

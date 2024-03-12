@@ -1,5 +1,6 @@
 package com.kcj.management.shop.model.order;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.kcj.management.shop.model.menu.Menu;
 import com.kcj.management.shop.model.menu.MenuOption;
 import com.kcj.management.shop.util.StringUtil;
@@ -20,12 +21,13 @@ public class OrderItem {
     private Long id;
 
     @ManyToOne
+    @JsonBackReference
     private Order order;
 
     @ManyToOne
     private Menu menu;
 
-    @OneToMany
+    @ManyToMany
     @Builder.Default
     private List<MenuOption> menuOptions = new ArrayList<>();
 

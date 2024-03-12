@@ -1,7 +1,7 @@
 package com.kcj.management.shop.model.order;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.kcj.management.shop.util.StringUtil;
 import jakarta.persistence.*;
 import lombok.*;
@@ -16,18 +16,19 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
 public class Ledger {
     @Id @GeneratedValue
     private Long id;
 
     @ManyToOne
+    @JsonBackReference
     private Department department;
 
     private String name;
 
     @OneToMany(mappedBy = "ledger", cascade = CascadeType.ALL)
     @Builder.Default
+    @JsonManagedReference
     private List<Order> orders = new ArrayList<>();
 
     @Temporal(TemporalType.TIMESTAMP)

@@ -1,5 +1,6 @@
 package com.kcj.management.shop.model.supply;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,5 +22,6 @@ public class CompanyLedger {
     private LocalDate purchaseDate;
 
     @ManyToOne
+    @JsonBackReference
     private Company company;
 }

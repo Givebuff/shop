@@ -1,8 +1,7 @@
 package com.kcj.management.shop.model.order;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.kcj.management.shop.util.StringUtil;
 import jakarta.persistence.*;
 import lombok.*;
@@ -18,7 +17,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "orders")
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
 public class Order {
     @Id @GeneratedValue
     private Long id;
@@ -27,6 +25,7 @@ public class Order {
     private Department department;
 
     @ManyToOne
+    @JsonBackReference
     private Ledger ledger;
 
     @ManyToOne
@@ -59,6 +58,7 @@ public class Order {
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.REMOVE)
     @Builder.Default
+    @JsonManagedReference
     private List<OrderItem> orderItems = new ArrayList<>();
 
     private String htmlId;

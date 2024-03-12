@@ -8,4 +8,5 @@ import java.util.List;
 public interface OrderRepositoryCustom {
     List<Order> todayOrderList();
     List<OrderDTO> todayOrderTodayDTOList();
+    List<OrderDTO> testDTO();
 }

@@ -28,4 +28,9 @@ public class OrderRestController {
 
     @GetMapping("/rest/order/today/dto")
     public List<OrderDTO> getOrderTodayDTOList(){return orderService.orderTodayDTOS();}
+
+    @GetMapping("/rest/order/dto/test")
+    public List<OrderDTO> getOrderDTOTest(){
+        return orderService.orderDTOTest();
+    }
 }

@@ -1,5 +1,6 @@
 package com.kcj.management.shop.model.menu;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.kcj.management.shop.util.StringUtil;
 import jakarta.persistence.*;
 import lombok.*;
@@ -22,6 +23,7 @@ public class MenuOption {
     private int price;
 
     @ManyToOne
+    @JsonBackReference
     private Menu menu;
 
     @Builder.Default
