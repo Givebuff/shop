@@ -21,6 +21,13 @@ public class OrderController {
 
     @GetMapping("/kitchen/kitchen")
     public String kitchenManagePage(Model model) {
+        model.addAttribute("orders", orderService.orderTodayDTOS());
         return "/kitchen/kitchen";
+    }
+
+    @GetMapping("/order/order")
+    public String orderManagePage(Model model) {
+        model.addAttribute("orders", orderService.orderTodayDTOS());
+        return "/order/order";
     }
 }

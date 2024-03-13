@@ -24,7 +24,7 @@
                 <thead class="[&amp;_tr]:border-b">
                 <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
                     <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0 bg-gray-300">
-                        번호
+                        분류
                     </th>
                     <th class="h-12 px-4 text-left align-middle font-medium text-muted-foreground [&amp;:has([role=checkbox])]:pr-0 bg-gray-300">
                         메뉴
@@ -37,47 +37,57 @@
                     </th>
                 </tr>
                 </thead>
-                <tbody class="[&amp;_tr:last-child]:border-0">
-                <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-                    <td rowspan="3" class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 bg-blue-200">배달</td>
-                    <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 bg-blue-200">메뉴1(옵션)</td>
-                    <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 bg-blue-200">1</td>
-                    <td rowspan="3" class="p-4 align-middle [&amp;:has([role=checkbox])]:ㄴpr-0 bg-blue-200">
-                        <button class="p-2 align-middle bg-green-500 text-white rounded-lg shadow">완료</button>
-                    </td>
-                </tr>
-                <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-                    <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 bg-blue-200">메뉴2(옵션)</td>
-                    <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 bg-blue-200">2</td>
-                </tr>
-                <tr class="border-b-4 transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-                    <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 bg-blue-200">메뉴3</td>
-                    <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 bg-blue-200">1</td>
-                </tr>
-                <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-                    <td rowspan="2" class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 bg-yellow-200">2</td>
-                    <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 bg-yellow-200">메뉴2</td>
-                    <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 bg-yellow-200">3</td>
-                    <td rowspan="2" class="p-4 align-middle [&amp;:has([role=checkbox])]:ㄴpr-0 bg-yellow-200">
-                        <button class="p-2 align-middle bg-green-500 text-white rounded-lg shadow">완료</button>
-                    </td>
-                </tr>
-                <tr class="border-b-4 transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-                    <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 bg-yellow-200">메뉴1</td>
-                    <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 bg-yellow-200">1</td>
-                </tr>
-                <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-                    <td rowspan="2" class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 bg-blue-200">포장</td>
-                    <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 bg-blue-200">메뉴3(옵션)</td>
-                    <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 bg-blue-200">1</td>
-                    <td rowspan="2" class="p-4 align-middle [&amp;:has([role=checkbox])]:ㄴpr-0 bg-blue-200">
-                        <button class="p-2 align-middle bg-green-500 text-white rounded-lg shadow">완료</button>
-                    </td>
-                </tr>
-                <tr class="border-b-4 transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-                    <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 bg-blue-200">메뉴4(옵션1, 옵션2)</td>
-                    <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 bg-blue-200">1</td>
-                </tr>
+                <tbody class="[&amp;_tr:last-child]:border-0" th:each="order, idx1: ${orders}">
+                    <tr th:if="${idx1.index % 2 == 0}"
+                        th:each="orderItem, idx2 : ${order.orderItems}"
+                        class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                        <td th:if="${idx2.index == 0}"
+                            th:rowspan="${idx2.size}"
+                            class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 bg-blue-200">
+                            <span th:text="${order.orderType == T(com.kcj.management.shop.model.order.OrderType).HOLE} ? ${order.tableNum} : ${order.orderTypeKr}">분류</span>
+                        </td>
+                        <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 bg-blue-200">
+                            <span th:text="${orderItem.menu.name} + ' // '">
+                                메뉴
+                            </span>
+                            <span th:each="menuOption, index: ${orderItem.menuOptions}" th:text="${menuOption.name} + ' '">
+                                옵션
+                            </span>
+                        </td>
+                        <td th:text="${orderItem.count}"
+                            class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 bg-blue-200">갯수</td>
+                        <td th:if="${idx2.index == 0}"
+                            th:rowspan="${idx2.size}"
+                            class="p-4 align-middle [&amp;:has([role=checkbox])]:ㄴpr-0 bg-blue-200">
+                            <button th:onclick="${''}"
+                                    class="p-2 align-middle bg-green-500 text-white rounded-lg shadow">완료</button>
+                        </td>
+                    </tr>
+
+                    <tr th:if="${idx1.index % 2 == 1}"
+                        th:each="orderItem, idx2 : ${order.orderItems}"
+                        class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                        <td th:if="${idx2.index == 0}"
+                            th:rowspan="${idx2.size}"
+                            class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 bg-yellow-200">
+                            <span th:text="${order.orderType == T(com.kcj.management.shop.model.order.OrderType).HOLE} ? ${order.tableNum} : ${order.orderTypeKr}">분류</span>
+                        </td>
+                        <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 bg-yellow-200">
+                            <span th:text="${orderItem.menu.name} + ' // '">
+                                메뉴
+                            </span>
+                            <span th:each="menuOption, index: ${orderItem.menuOptions}" th:text="${menuOption.name} + ' '">
+                                옵션
+                            </span>
+                        </td>
+                        <td th:text="${orderItem.count}"
+                            class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 bg-yellow-200">갯수</td>
+                        <td th:if="${idx2.index == 0}"
+                            th:rowspan="${idx2.size}"
+                            class="p-4 align-middle [&amp;:has([role=checkbox])]:ㄴpr-0 bg-yellow-200">
+                            <button class="p-2 align-middle bg-green-500 text-white rounded-lg shadow">완료</button>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>

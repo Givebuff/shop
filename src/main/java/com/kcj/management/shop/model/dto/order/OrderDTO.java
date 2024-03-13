@@ -18,7 +18,9 @@ public class OrderDTO {
     private String reservationContent;
     private int people;
     private OrderType orderType;
+    private String orderTypeKr;
     private WorkStatus workStatus;
+    private String workStatusKr;
     private LocalDateTime orderDate;
     private LocalDateTime reservationDate;
     private List<OrderItem> orderItems = new ArrayList<>();
@@ -29,7 +31,9 @@ public class OrderDTO {
         reservationContent = order.getReservationContent();
         people = order.getPeople();
         orderType = order.getOrderType();
+        orderTypeKr = OrderType.getKorean(orderType);
         workStatus = order.getWorkStatus();
+        workStatusKr = WorkStatus.getKorean(workStatus);
         orderDate = order.getOrderDate();
         reservationDate = order.getReservationDate();
         orderItems = order.getOrderItems();

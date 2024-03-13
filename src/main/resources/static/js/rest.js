@@ -39,3 +39,17 @@ function menuDelete(id) {
         }
     });
 }
+
+function kitchenCookComplete(id) {
+    $.ajax({
+        url:'/kitchen/cook/complete',
+        method: 'patch',
+        data:{
+            "id" : id
+        },
+        dataType: 'json',
+        success: function(data, status, xhr) {
+
+        }
+    })
+}
