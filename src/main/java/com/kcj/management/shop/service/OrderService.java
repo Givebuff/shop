@@ -2,7 +2,7 @@ package com.kcj.management.shop.service;
 
 import com.kcj.management.shop.exception.IdNotFoundException;
 import com.kcj.management.shop.model.dto.order.OrderDTO;
-import com.kcj.management.shop.model.order.Department;
+import com.kcj.management.shop.model.dto.order.OrderSettle;
 import com.kcj.management.shop.model.order.*;
 import com.kcj.management.shop.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,4 +90,11 @@ public class OrderService {
     }
 
     public List<OrderDTO> orderTodayDTOS() {return orderRepository.todayOrderTodayDTOList();}
+
+    public List<OrderDTO> kitchenOrderList() {
+        return orderRepository.kitchenOrderList();
+    }
+    public List<OrderSettle> orderSettlesYear(int year) {
+        return orderRepository.settleOrders(year);
+    }
 }
