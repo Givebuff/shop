@@ -1,20 +1,20 @@
 package com.kcj.management.shop.repository.impl;
 
 import com.kcj.management.shop.model.dto.order.OrderDTO;
+import com.kcj.management.shop.model.dto.order.OrderSettle;
+import com.kcj.management.shop.model.menu.QMenu;
+import com.kcj.management.shop.model.menu.QMenuOption;
 import com.kcj.management.shop.model.order.*;
 import com.kcj.management.shop.repository.custom.OrderRepositoryCustom;
 import com.kcj.management.shop.util.DateUtil;
 import com.querydsl.core.BooleanBuilder;
-import com.querydsl.core.types.ConstructorExpression;
 import com.querydsl.core.types.Projections;
-import com.querydsl.core.types.QBean;
+import com.querydsl.core.types.dsl.NumberExpression;
+import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQuery;
 import jakarta.persistence.EntityManager;
 
 import java.util.List;
-
-import static com.querydsl.core.group.GroupBy.groupBy;
-import static com.querydsl.core.group.GroupBy.list;
 
 public class OrderRepositoryImpl implements OrderRepositoryCustom {
     private final EntityManager queryManager;
@@ -43,5 +43,53 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
     @Override
     public List<OrderDTO> todayOrderTodayDTOList(){
         return OrderDTO.orderDTOList(todayOrderList());
+    }
+
+    @Override
+    public List<OrderDTO> kitchenOrderList() {
+        JPAQuery<Order> query = new JPAQuery<>(queryManager);
+        QOrder order = QOrder.order;
+        QOrderItem orderItem = QOrderItem.orderItem;
+
+        List<Order> orders = query
+                .select(Projections.bean(Order.class,
+                        order.id, order.orderDate, order.orderType,
+                        order.reservationDate, order.tableNum, order.workStatus))
+                .from(order)
+                .join(orderItem)
+                .on(order.id.eq(orderItem.order.id))
+                .where(order.workStatus.eq(WorkStatus.COOK)
+                        .and(order.reservationDate.coalesce(order.orderDate)
+                                .between(DateUtil.todayStartDateTime(), DateUtil.todayEndDateTime())
+                        )
+                        .and(orderItem.complete.isFalse()))
+                .fetch();
+
+        return OrderDTO.orderDTOList(orders);
+    }
+
+    @Override
+    public List<OrderSettle> settleOrders(int year) {
+        JPAQuery<OrderItem> query = new JPAQuery<>(queryManager);
+        QOrder order = QOrder.order;
+        QOrderItem orderItem = QOrderItem.orderItem;
+        QMenu menu = QMenu.menu;
+        QMenuOption menuOption = QMenuOption.menuOption;
+        NumberExpression<Integer> totalPrice = menu.price.multiply(menu.name.count());
+
+        return query
+                .select(Projections.bean(OrderSettle.class,
+                        menu.name.as("menuName"),
+                        menu.price.as("price"),
+                        menu.name.count().as("count1"),
+                        totalPrice.as("totalPrice")))
+                .from(order)
+                .join(orderItem).on(order.id.eq(orderItem.order.id))
+                .join(menu).on(menu.id.eq(orderItem.menu.id))
+                .where(order.payType.isNotNull()
+                        .and(order.workStatus.eq(WorkStatus.COMPLETE))
+                        .and(order.paymentDate.between(DateUtil.yearStartDateTime(year), DateUtil.yearEndDateTime(year))))
+                .groupBy(menu.name, menu.price)
+                .fetch();
     }
 }
