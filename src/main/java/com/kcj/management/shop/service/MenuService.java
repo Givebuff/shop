@@ -8,6 +8,7 @@ import com.kcj.management.shop.repository.MenuRepository;
 import com.kcj.management.shop.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,6 +18,7 @@ public class MenuService {
     @Autowired
     private MenuRepository menuRepository;
 
+    @Transactional
     public void saveMenu(Menu menu){
         menuRepository.save(menu);
     }
@@ -50,6 +52,7 @@ public class MenuService {
         return menuRepository.findByUsedTrueOrderByMenuCategoryAndName();
     }
 
+    @Transactional
     public void changeMenu(Long preId, Long postId) {
         Menu preMenu = findById(preId);
         Menu postMenu = findById(postId);
@@ -64,6 +67,7 @@ public class MenuService {
         }
     }
 
+    @Transactional
     public void unusedMenu(Long id){
         findById(id).setUsed(false);
     }

@@ -1,13 +1,11 @@
 package com.kcj.management.shop.controller;
 
-import com.kcj.management.shop.model.menu.Menu;
 import com.kcj.management.shop.model.menu.MenuOption;
 import com.kcj.management.shop.service.MenuOptionService;
 import com.kcj.management.shop.service.MenuService;
 import com.kcj.management.shop.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -58,7 +56,6 @@ public class MenuOptionController {
     }
 
     @PostMapping("/menu/option/change")
-    @Transactional
     public String menuOptionChange(
             @RequestParam("id") Long id,
             @RequestParam("menu") Long menuId,

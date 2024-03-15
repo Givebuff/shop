@@ -7,6 +7,7 @@ import com.kcj.management.shop.model.order.*;
 import com.kcj.management.shop.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,7 +16,10 @@ import java.util.Optional;
 public class OrderService {
     @Autowired
     private OrderRepository orderRepository;
+    @Autowired
+    private OrderItemService orderItemService;
 
+    @Transactional
     public void saveOrder(Order order){
         orderRepository.save(order);
     }
@@ -45,22 +49,21 @@ public class OrderService {
     public List<Order> findByOrderType(OrderType orderType) {
         return orderRepository.findByOrderType(orderType);
     }
-
+    public Order findByHtmlId(String htmlId) {return orderRepository.findByHtmlId(htmlId);}
     public List<Order> findByPayTypeAndWorkStatus(PayType payType, WorkStatus workStatus) {
         return orderRepository.findByPayTypeAndWorkStatus(payType, workStatus);
     }
 
+    @Transactional
     public void addOrderItem(Long orderId, OrderItem orderItem) {
         findById(orderId).addOrderItem(orderItem);
     }
 
+    @Transactional
     public void removeOrderItem(Long orderId, OrderItem orderItem) {
         findById(orderId).removeOrderItem(orderItem);
     }
 
-    public List<Order> getNoPaymentOrderList() {
-        return null;
-    }
 
     public List<Order> findByDepartment(Department department) {
         return orderRepository.findByDepartment(department);
@@ -74,10 +77,11 @@ public class OrderService {
         return orderRepository.findByDepartmentAndLedgerIsNotNull(department);
     }
 
+    @Transactional
     public void orderCookComplete(Long id) {
         Order order = findById(id);
         for(OrderItem item :order.getOrderItems()){
-            item.setComplete(true);
+            orderItemService.orderItemCookComplete(item.getId());
         }
     }
 

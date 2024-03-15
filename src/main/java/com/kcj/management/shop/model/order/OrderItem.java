@@ -7,6 +7,7 @@ import com.kcj.management.shop.util.StringUtil;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +38,9 @@ public class OrderItem {
 
     @Builder.Default
     private boolean complete = false;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private LocalDateTime completeDateTime;
 
     @PostPersist
     public void afterSave(){

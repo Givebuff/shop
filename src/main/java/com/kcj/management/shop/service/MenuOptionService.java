@@ -8,6 +8,7 @@ import com.kcj.management.shop.repository.MenuOptionRepository;
 import com.kcj.management.shop.repository.MenuRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +19,7 @@ public class MenuOptionService {
     @Autowired
     private MenuOptionRepository menuOptionRepository;
 
+    @Transactional
     public void saveMenuOption(MenuOption menuOption){
         menuOptionRepository.save(menuOption);
     }
@@ -47,6 +49,7 @@ public class MenuOptionService {
         return menuOptionRepository.findByUsedTrueOrderByMenuAndName();
     }
 
+    @Transactional
     public void unusedMenuOption(Long id){
         findById(id).setUsed(false);
     }

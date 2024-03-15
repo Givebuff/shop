@@ -6,6 +6,7 @@ import com.kcj.management.shop.model.menu.MenuCategory;
 import com.kcj.management.shop.repository.MenuCategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,6 +16,7 @@ public class MenuCategoryService {
     @Autowired
     private MenuCategoryRepository menuCategoryRepository;
 
+    @Transactional
     public void saveMenuCategory(MenuCategory menuCategory){
         menuCategoryRepository.save(menuCategory);
     }
@@ -47,6 +49,7 @@ public class MenuCategoryService {
         return menuCategoryRepository.findByUsedTrue();
     }
 
+    @Transactional
     public void unusedMenuCategory(Long id) {
         findById(id).setUsed(false);
     }

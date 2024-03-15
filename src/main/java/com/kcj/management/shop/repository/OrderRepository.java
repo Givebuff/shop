@@ -22,4 +22,5 @@ public interface OrderRepository extends JpaRepository<Order, Long>, OrderReposi
     List<Order> findByDepartmentAndLedger(Department department, Ledger ledger);
     List<Order> findByDepartmentAndLedgerIsNotNull(Department department);
     List<Order> findByAddress(Address address);
+    Order findByHtmlId(String htmlId);
 }

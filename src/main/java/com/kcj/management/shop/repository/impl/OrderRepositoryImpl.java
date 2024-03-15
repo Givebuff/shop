@@ -52,9 +52,6 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
         QOrderItem orderItem = QOrderItem.orderItem;
 
         List<Order> orders = query
-                .select(Projections.bean(Order.class,
-                        order.id, order.orderDate, order.orderType,
-                        order.reservationDate, order.tableNum, order.workStatus))
                 .from(order)
                 .join(orderItem)
                 .on(order.id.eq(orderItem.order.id))

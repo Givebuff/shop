@@ -6,6 +6,7 @@ import com.kcj.management.shop.repository.AddressRepository;
 import com.kcj.management.shop.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,6 +16,7 @@ public class AddressService {
     @Autowired
     private AddressRepository addressRepository;
 
+    @Transactional
     public void saveAddress(Address address) {
         addressRepository.save(address);
     }

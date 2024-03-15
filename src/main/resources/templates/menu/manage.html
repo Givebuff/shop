@@ -55,7 +55,7 @@
                            th:href="@{/menu/change/} + ${menu.id}" >수정</a></td>
                     <td rowspan="3" class="p-4 align-middle [&amp;:has([role=checkbox])]:ㄴpr-0 bg-blue-200">
                         <button class="p-2 align-middle bg-green-500 text-white rounded-lg shadow"
-                                th:onclick="'menuDelete(' + ${menu.id} + ')'" >삭제</button>
+                                th:onclick="'restFuncController(menuDelete, ' + ${menu.id} + ')'" >삭제</button>
                     </td>
                 </tr>
                 <tr th:if="${idx.index % 2 != 0}" class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
@@ -68,7 +68,7 @@
                            th:href="@{/menu/change/} + ${menu.id}" >수정</a></td></td>
                     <td class="p-4 align-middle [&amp;:has([role=checkbox])]:ㄴpr-0 bg-yellow-200">
                         <button class="p-2 align-middle bg-green-500 text-white rounded-lg shadow"
-                                th:onclick="'menuDelete(' + ${menu.id} + ')'"  >삭제</button>
+                                th:onclick="'restFuncController(menuDelete, ' + ${menu.id} + ')'"  >삭제</button>
                     </td>
                 </tr>
                 </tbody>

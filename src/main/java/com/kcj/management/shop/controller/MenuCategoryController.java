@@ -2,12 +2,13 @@ package com.kcj.management.shop.controller;
 
 import com.kcj.management.shop.model.menu.MenuCategory;
 import com.kcj.management.shop.service.MenuCategoryService;
-import com.kcj.management.shop.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -46,7 +47,6 @@ public class MenuCategoryController {
     }
 
     @PostMapping("/menu/category/change")
-    @Transactional
     public String menuCategoryChangePage(
             @RequestParam("id") Long id,
             @RequestParam("name") String name

@@ -8,6 +8,7 @@
     <meta name="author" content="">
     <link th:href="@{/css/output.css}" rel="stylesheet" type="text/css">
     <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+    <script th:src="@{/js/rest.js}"></script>
 </head>
 <body>
 <!--
@@ -37,7 +38,7 @@
                     </th>
                 </tr>
                 </thead>
-                <tbody class="[&amp;_tr:last-child]:border-0" th:each="order, idx1: ${orders}">
+                <tbody id="kitchenTableBody" class="[&amp;_tr:last-child]:border-0" th:each="order, idx1: ${orders}">
                     <tr th:if="${idx1.index % 2 == 0}"
                         th:each="orderItem, idx2 : ${order.orderItems}"
                         class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
@@ -59,7 +60,7 @@
                         <td th:if="${idx2.index == 0}"
                             th:rowspan="${idx2.size}"
                             class="p-4 align-middle [&amp;:has([role=checkbox])]:ㄴpr-0 bg-blue-200">
-                            <button th:onclick="${''}"
+                            <button th:onclick="'restFuncController(kitchenCookComplete, ' + ${order.id} + ')'"
                                     class="p-2 align-middle bg-green-500 text-white rounded-lg shadow">완료</button>
                         </td>
                     </tr>
@@ -85,7 +86,8 @@
                         <td th:if="${idx2.index == 0}"
                             th:rowspan="${idx2.size}"
                             class="p-4 align-middle [&amp;:has([role=checkbox])]:ㄴpr-0 bg-yellow-200">
-                            <button class="p-2 align-middle bg-green-500 text-white rounded-lg shadow">완료</button>
+                            <button th:onclick="'restFuncController(kitchenCookComplete, ' + ${order.id} + ')'"
+                                    class="p-2 align-middle bg-green-500 text-white rounded-lg shadow">완료</button>
                         </td>
                     </tr>
                 </tbody>

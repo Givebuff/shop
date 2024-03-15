@@ -5,6 +5,7 @@ import com.kcj.management.shop.model.order.Department;
 import com.kcj.management.shop.repository.DepartmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,6 +15,7 @@ public class DepartmentService {
     @Autowired
     private DepartmentRepository departmentRepository;
 
+    @Transactional
     public void saveDepartment(Department department) {
         if(departmentRepository.findBySectionAndDept(department.getSection(), department.getDept()).isPresent()) {
             throw new NotExistException(getClass().getSimpleName());
