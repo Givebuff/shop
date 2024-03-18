@@ -24,6 +24,7 @@ public class OrderDTO {
     private LocalDateTime orderDate;
     private LocalDateTime reservationDate;
     private List<OrderItem> orderItems = new ArrayList<>();
+    private boolean complete;
 
     public OrderDTO(Order order) {
         id = order.getId();
@@ -37,6 +38,7 @@ public class OrderDTO {
         orderDate = order.getOrderDate();
         reservationDate = order.getReservationDate();
         orderItems = order.getOrderItems();
+        complete = order.isComplete();
     }
 
     public static List<OrderDTO> orderDTOList(List<Order> orders) {

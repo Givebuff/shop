@@ -36,4 +36,14 @@ public class OrderRestController {
         orderService.orderCookComplete(id);
         return orderService.kitchenOrderList();
     }
+
+    @GetMapping("/rest/order/hole/{tableNum}")
+    public OrderDTO getOrderHoleTableNum(@PathVariable("tableNum") int tableNum){
+        return null;
+    }
+
+    @GetMapping("/rest/order/hole/table/count")
+    public int getOrderHoleTableCount() {
+        return OrderService.TABLE_COUNT;
+    }
 }

@@ -11,4 +11,5 @@ public interface OrderRepositoryCustom {
     List<OrderDTO> todayOrderTodayDTOList();
     List<OrderDTO> kitchenOrderList();
     List<OrderSettle> settleOrders(int year);
+    List<OrderDTO> todayUsedHoleTables();
 }

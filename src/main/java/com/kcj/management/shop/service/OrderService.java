@@ -6,6 +6,7 @@ import com.kcj.management.shop.model.dto.order.OrderSettle;
 import com.kcj.management.shop.model.order.*;
 import com.kcj.management.shop.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +19,9 @@ public class OrderService {
     private OrderRepository orderRepository;
     @Autowired
     private OrderItemService orderItemService;
+
+    @Value("${shop.calc.table.count}")
+    public static Integer TABLE_COUNT;
 
     @Transactional
     public void saveOrder(Order order){

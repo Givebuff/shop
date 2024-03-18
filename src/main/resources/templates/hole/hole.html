@@ -9,6 +9,8 @@
     <link th:href="@{/css/output.css}" rel="stylesheet" type="text/css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script th:src="@{/js/jquery-3.7.1.min.js}"></script>
+    <script th:src="@{/js/rest.js}"></script>
+    <script th:src="@{/js/template.js}"></script>
 </head>
 <body>
 <div class="max-w-4xl mx-auto p-4 bg-white dark:bg-gray-800">
@@ -16,80 +18,38 @@
     <h1 class="bg-blue-200 text-black rounded-lg text-center text-xl font-semibold mb-6 p-3"><a href="/">처음으로</a></h1>
     <div class="p-2">
         <h2 class="text-left text-lg font-semibold mb-4 text-gray-800 dark:text-gray-200">테이블</h2>
-        <div class="grid grid-cols-5 gap-4 mb-6 p-3 rounded-lg bg-gray-200 shadow-inner">
+        <div id="holeTable" class="grid grid-cols-5 gap-4 mb-6 p-3 rounded-lg bg-gray-200 shadow-inner">
             <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 hover:bg-gray-400">
                 1
             </button>
-            <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 bg-gray-400">
-                2
-            </button>
-            <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 hover:bg-gray-400">
-                3
-            </button>
-            <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 hover:bg-gray-400">
-                4
-            </button>
-            <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 hover:bg-gray-400">
-                5
-            </button>
-            <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 hover:bg-gray-400">
-                6
-            </button>
-            <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 hover:bg-gray-400">
-                7
-            </button>
-            <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 hover:bg-gray-400">
-                8
-            </button>
-            <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 hover:bg-gray-400">
-                9
-            </button>
-            <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 hover:bg-gray-400">
-                10
-            </button>
-            <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 hover:bg-gray-400">
-                11
-            </button>
-            <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 hover:bg-gray-400">
-                12
-            </button>
-            <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 hover:bg-gray-400">
-                13
-            </button>
-            <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 hover:bg-gray-400">
-                14
-            </button>
-            <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 hover:bg-gray-400">
-                15
-            </button>
         </div>
-        <h2 class="text-left text-lg font-semibold mb-4 text-gray-800 dark:text-gray-200">2번</h2>
+        <h2 id="holeTableNum" class="text-left text-lg font-semibold mb-4 text-gray-800 dark:text-gray-200">2번</h2>
         <div class="border p-4 rounded-lg bg-gray-200 dark:bg-gray-600 shadow-inner">
             <div class="relative w-full overflow-auto">
                 <table class="w-full caption-bottom text-sm">
                     <thead class="[&amp;_tr]:border-b bg-gray-500 text-white text-lg font-semibold">
-                    <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
-                        <th class="h-12 px-4 text-left align-middle text-muted-foreground [&amp;:has([role=checkbox])]:pr-0 w-1/2">
-                            메뉴명
-                        </th>
-                        <th class="h-12 px-4 text-left align-middle text-muted-foreground [&amp;:has([role=checkbox])]:pr-0 w-1/3">
-                            가격
-                        </th>
-                    </tr>
+                        <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted">
+                            <th class="h-12 px-4 text-left align-middle text-muted-foreground [&amp;:has([role=checkbox])]:pr-0 w-1/2">
+                                메뉴명
+                            </th>
+                            <th class="h-12 px-4 text-left align-middle text-muted-foreground [&amp;:has([role=checkbox])]:pr-0 w-1/3">
+                                가격
+                            </th>
+                        </tr>
                     </thead>
                     <tbody class="[&amp;_tr:last-child]:border-0">
-                    <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted bg-blue-200">
-                        <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 font-medium">메뉴1</td>
-                        <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">₩10,000</td>
-                    </tr>
-                    <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted bg-blue-200">
-                        <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 font-medium">메뉴2</td>
-                        <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">₩10,000</td>
-                    </tr>
-                    <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted bg-blue-200">
-                        <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 font-medium">메뉴3</td>
-                        <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">₩10,000</td>
-                    </tr>
+                        <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted bg-blue-200">
+                            <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 font-medium">메뉴1</td>
+                            <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">₩10,000</td>
+                        </tr>
+                        <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted bg-blue-200">
+                            <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 font-medium">메뉴2</td>
+                            <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">₩10,000</td>
+                        </tr>
+                        <tr class="border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted bg-blue-200">
+                            <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0 font-medium">메뉴3</td>
+                            <td class="p-4 align-middle [&amp;:has([role=checkbox])]:pr-0">₩10,000</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -111,5 +71,9 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    let tableButtonStyle = "";
+
+</script>
 </body>
 </html>

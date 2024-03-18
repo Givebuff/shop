@@ -11,11 +11,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class OrderController {
     @Autowired private OrderService orderService;
-    @Value("${shop.calc.table.count}") private Integer tableCount;
 
     @GetMapping("/hole/hole")
     public String holeManagePage(Model model) {
-        model.addAttribute("tableCount", tableCount);
+        model.addAttribute("tableCount", OrderService.TABLE_COUNT);
         return "/hole/hole";
     }
 

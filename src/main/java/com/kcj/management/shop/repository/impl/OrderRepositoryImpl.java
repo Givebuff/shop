@@ -89,4 +89,20 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
                 .groupBy(menu.name, menu.price)
                 .fetch();
     }
+
+    @Override
+    public List<OrderDTO> todayUsedHoleTables() {
+        JPAQuery<Order> query = new JPAQuery<>(queryManager);
+        QOrder order = QOrder.order;
+
+        List<Order> orders = query.from(order)
+                .where(order.reservationDate.coalesce(order.orderDate)
+                        .between(DateUtil.todayStartDateTime(), DateUtil.todayEndDateTime())
+                        .and(order.orderType.eq(OrderType.HOLE))
+                        .and(order.complete.isFalse()))
+                .orderBy(order.tableNum.asc())
+                .fetch();
+
+        return OrderDTO.orderDTOList(orders);
+    }
 }

@@ -63,6 +63,9 @@ public class Order {
 
     private String htmlId;
 
+    @Builder.Default
+    private boolean complete = false;
+
     @PostPersist
     public void afterSave(){
         if(htmlId == null) {
