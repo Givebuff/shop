@@ -1,5 +1,6 @@
 package com.kcj.management.shop.controller.rest;
 
+import com.kcj.management.shop.model.dto.RestApiRequest;
 import com.kcj.management.shop.model.dto.order.OrderDTO;
 import com.kcj.management.shop.model.dto.order.OrderSettle;
 import com.kcj.management.shop.model.order.Order;
@@ -45,5 +46,15 @@ public class OrderRestController {
     @GetMapping("/rest/order/hole/table/count")
     public int getOrderHoleTableCount() {
         return OrderService.TABLE_COUNT;
+    }
+
+    @GetMapping("/rest/order/used/hole/table")
+    public boolean[] getTodayUsedHoleTable() {
+        return orderService.todayUsedHoleTable();
+    }
+
+    @GetMapping("/rest/hole/table/order/{tableNum}")
+    public RestApiRequest getHoleTableOrder(@PathVariable("tableNum") int tableNum) {
+        return new RestApiRequest(orderService.getHoleTableOrder(tableNum));
     }
 }

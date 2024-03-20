@@ -6,6 +6,7 @@ import com.kcj.management.shop.model.menu.QMenu;
 import com.kcj.management.shop.model.menu.QMenuOption;
 import com.kcj.management.shop.model.order.*;
 import com.kcj.management.shop.repository.custom.OrderRepositoryCustom;
+import com.kcj.management.shop.service.OrderService;
 import com.kcj.management.shop.util.DateUtil;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Projections;
@@ -14,6 +15,9 @@ import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQuery;
 import jakarta.persistence.EntityManager;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class OrderRepositoryImpl implements OrderRepositoryCustom {
@@ -91,7 +95,7 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
     }
 
     @Override
-    public List<OrderDTO> todayUsedHoleTables() {
+    public boolean[] todayUsedHoleTables() {
         JPAQuery<Order> query = new JPAQuery<>(queryManager);
         QOrder order = QOrder.order;
 
@@ -103,6 +107,13 @@ public class OrderRepositoryImpl implements OrderRepositoryCustom {
                 .orderBy(order.tableNum.asc())
                 .fetch();
 
-        return OrderDTO.orderDTOList(orders);
+        boolean [] booleans = new boolean[OrderService.TABLE_COUNT];
+        Arrays.fill(booleans, false);
+
+        for(Order item: orders) {
+            booleans[item.getTableNum() - 1] = true;
+        }
+
+        return booleans;
     }
 }

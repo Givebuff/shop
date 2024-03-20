@@ -20,8 +20,12 @@ public class OrderService {
     @Autowired
     private OrderItemService orderItemService;
 
+    public static int TABLE_COUNT;
+
     @Value("${shop.calc.table.count}")
-    public static Integer TABLE_COUNT;
+    public void setTableCount(int value) {
+        TABLE_COUNT = value;
+    }
 
     @Transactional
     public void saveOrder(Order order){
@@ -105,4 +109,7 @@ public class OrderService {
     public List<OrderSettle> orderSettlesYear(int year) {
         return orderRepository.settleOrders(year);
     }
+
+    public boolean[] todayUsedHoleTable() { return orderRepository.todayUsedHoleTables(); }
+    public Order getHoleTableOrder(int tableNum){ return orderRepository.findByOrderTypeAndTableNumAndCompleteIsFalse(OrderType.HOLE, tableNum); }
 }

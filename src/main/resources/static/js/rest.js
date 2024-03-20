@@ -13,7 +13,6 @@ function menuCategoryDelete(id) {
         },
         dataType : 'json',
         success: function (data, status, xhr) {
-            console.log("data : : " + JSON.stringify(data));
         },
         error: function (data, status, err) {
             console.log("err");
@@ -34,7 +33,6 @@ function menuDelete(id) {
         },
         dataType : 'json',
         success: function (data, status, xhr) {
-            console.log("data : : " + JSON.stringify(data));
         },
         error: function (data, status, err) {
             console.log("err");
@@ -55,7 +53,6 @@ function menuOptionDelete(id) {
         },
         dataType : 'json',
         success: function (data, status, xhr) {
-            console.log("data : : " + JSON.stringify(data));
         },
         error: function (data, status, err) {
             console.log("err");
@@ -76,7 +73,6 @@ function kitchenCookComplete(id) {
         },
         dataType: 'json',
         success: function(data, status, xhr) {
-            console.log("data : " + JSON.stringify(data));
         },
         error: function (data, status, err) {
             console.log("err");
@@ -88,4 +84,46 @@ function kitchenCookComplete(id) {
     })
 }
 
-function
+function getTodayUsedHoleTable() {
+    let usedList = [];
+
+    $.ajax({
+        url:'/rest/order/used/hole/table',
+        method: 'GET',
+        async : false,
+        dataType: 'json',
+        success: function(data, status, xhr) {
+            usedList = data;
+        },
+        error: function (data, status, err) {
+            console.log("err");
+            console.log(err);
+        },
+        complete: function () {
+            console.log("complete");
+        }
+    });
+
+    return usedList;
+}
+
+function getHoleTableOrder(tableNum) {
+    let order;
+    $.ajax({
+        url: '/rest/hole/table/order/' + tableNum,
+        method : 'GET',
+        async : false,
+        dataType : 'json',
+        success: function (result, status, xhr) {
+            order = result.result;
+        },
+        error: function (data, status, err) {
+            console.log("err");
+            console.log(err);
+        },
+        complete: function () {
+            console.log("complete");
+        }
+    });
+    return order;
+}

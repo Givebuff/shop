@@ -336,7 +336,7 @@ public class InitLoader implements CommandLineRunner {
                 .orderType(OrderType.RESERVATION)
                 .tableNum(3)
                 .people(4)
-                .reservationDate(LocalDateTime.now().withHour(12).withMinute(0))
+                .reservationDate(LocalDateTime.now().withHour(18).withMinute(0))
                 .workStatus(WorkStatus.RESERVATION)
                 .department(department)
                 .build();

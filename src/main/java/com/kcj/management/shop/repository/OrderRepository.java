@@ -10,6 +10,7 @@ import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 public interface OrderRepository extends JpaRepository<Order, Long>, OrderRepositoryCustom {
     List<Order> findByPayType(PayType payType);
@@ -23,4 +24,5 @@ public interface OrderRepository extends JpaRepository<Order, Long>, OrderReposi
     List<Order> findByDepartmentAndLedgerIsNotNull(Department department);
     List<Order> findByAddress(Address address);
     Order findByHtmlId(String htmlId);
+    Order findByOrderTypeAndTableNumAndCompleteIsFalse(OrderType orderType, int tableNum);
 }
