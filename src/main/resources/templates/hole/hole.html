@@ -65,8 +65,9 @@
         </div>
     </div>
 </div>
-<script type="text/javascript">
+<script type="text/javascript" th:inline="javascript">
     let holeTableButtonStyle = '';
+    let initHoleTableNum = "[[${tableNum}]]";
 
     getTodayUsedHoleTable().forEach((used, idx) => {
         if(used) {
@@ -81,6 +82,8 @@
     $('#holeTable button').on('click', function(){
         holeTableButtonClickEvent(this)
     });
+
+    if(initHoleTableNum) $('button[value=' + initHoleTableNum + ']').click();
 
     function holeTableButtonClickEvent(event) {
         holeTableButtonClickStyle(event);

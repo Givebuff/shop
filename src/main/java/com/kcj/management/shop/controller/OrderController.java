@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Controller
 public class OrderController {
@@ -15,6 +16,13 @@ public class OrderController {
     @GetMapping("/hole/hole")
     public String holeManagePage(Model model) {
         model.addAttribute("tableCount", OrderService.TABLE_COUNT);
+        return "/hole/hole";
+    }
+
+    @GetMapping("/hole/hole/{tableNum}")
+    public String initHoleTableNum(@PathVariable("tableNum") int tableNum, Model model) {
+        model.addAttribute("tableCount", OrderService.TABLE_COUNT);
+        model.addAttribute("tableNum", tableNum);
         return "/hole/hole";
     }
 
