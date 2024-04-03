@@ -21,12 +21,12 @@ public class MenuController {
 
     @GetMapping("/menu")
     public String menuPage(){
-        return "/menu/index";
+        return "menu/index";
     }
     @GetMapping("/menu/registry")
     public String menuRegistryPage(Model model){
         model.addAttribute("menuCategories", menuCategoryService.findByUsedTrue());
-        return "/menu/registry";
+        return "menu/registry";
     }
 
     @PostMapping("/menu/registry")
@@ -44,14 +44,14 @@ public class MenuController {
                         .menuCategory(menuCategoryService.findById(categoryId))
                         .build());
 
-        return "redirect:/menu";
+        return "redirect:menu";
     }
 
     @GetMapping("/menu/change/{id}")
     public String changeMenuPage(@PathVariable("id") Long id, Model model){
         model.addAttribute("menu", menuService.findById(id));
         model.addAttribute("menuCategories", menuCategoryService.findByUsedTrue());
-        return "/menu/change";
+        return "menu/change";
     }
 
     @PostMapping("/menu/change")
@@ -74,12 +74,12 @@ public class MenuController {
         menuService.saveMenu(menu);
         menuService.changeMenu(preMenu.getId(), menu.getId());
 
-        return "redirect:/menu";
+        return "redirect:menu";
     }
 
     @GetMapping("/menu/manage")
     public String menuManagePage(Model model){
         model.addAttribute("menus", menuService.findByUsedTrue());
-        return "/menu/manage";
+        return "menu/manage";
     }
 }

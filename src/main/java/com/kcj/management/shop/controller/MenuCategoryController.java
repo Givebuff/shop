@@ -30,20 +30,20 @@ public class MenuCategoryController {
         menuCategory.setName(name);
         menuCategoryService.saveMenuCategory(menuCategory);
 
-        return "redirect:/menu";
+        return "redirect:menu";
     }
 
     @GetMapping("/menu/category/manage")
     public String menuCategoryManagePage(Model model){
         List<MenuCategory> categories = menuCategoryService.findByUsedTrue();
         model.addAttribute("menuCategories", categories);
-        return "/menu/category/manage";
+        return "menu/category/manage";
     }
 
     @GetMapping("/menu/category/change/{id}")
     public String menuCategoryChangePage(@PathVariable("id") Long id, Model model) {
         model.addAttribute("menuCategory", menuCategoryService.findById(id));
-        return "/menu/category/change";
+        return "menu/category/change";
     }
 
     @PostMapping("/menu/category/change")
@@ -53,6 +53,6 @@ public class MenuCategoryController {
     ) {
         MenuCategory menuCategory = menuCategoryService.findById(id);
         menuCategory.setName(name);
-        return "redirect:/menu";
+        return "redirect:menu";
     }
 }

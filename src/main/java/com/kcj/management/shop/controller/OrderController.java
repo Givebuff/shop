@@ -15,18 +15,18 @@ public class OrderController {
     @GetMapping("/hole/hole")
     public String holeManagePage(Model model) {
         model.addAttribute("tableCount", OrderService.TABLE_COUNT);
-        return "/hole/hole";
+        return "hole/hole";
     }
 
     @GetMapping("/kitchen/kitchen")
     public String kitchenManagePage(Model model) {
         model.addAttribute("orders", orderService.kitchenOrderList());
-        return "/kitchen/kitchen";
+        return "kitchen/kitchen";
     }
 
     @GetMapping("/order/order")
     public String orderManagePage(Model model) {
         model.addAttribute("orders", orderService.orderTodayDTOS());
-        return "/order/order";
+        return "order/order";
     }
 }

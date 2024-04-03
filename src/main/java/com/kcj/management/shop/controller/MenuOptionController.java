@@ -22,7 +22,7 @@ public class MenuOptionController {
     @GetMapping("/menu/option/registry")
     public String registryMenuOptionPage(Model model){
         model.addAttribute("menus", menuService.findByUsedTrue());
-        return "/menu/option/registry";
+        return "menu/option/registry";
     }
 
     @PostMapping("/menu/option/registry")
@@ -39,20 +39,20 @@ public class MenuOptionController {
                 .menu(menuService.findById(menu))
                 .build());
 
-        return "redirect:/menu";
+        return "redirect:menu";
     }
 
     @GetMapping("/menu/option/manage")
     public String menuOptionManagePage(Model model) {
         model.addAttribute("menuOptions", menuOptionService.findByUsedTrue());
-        return "/menu/option/manage";
+        return "menu/option/manage";
     }
 
     @GetMapping("/menu/option/change/{id}")
     public String menuOptionChangePage(@PathVariable("id") Long id, Model model) {
         model.addAttribute("menuOption", menuOptionService.findById(id));
         model.addAttribute("menus", menuService.findByUsedTrue());
-        return "/menu/option/change";
+        return "menu/option/change";
     }
 
     @PostMapping("/menu/option/change")
@@ -70,6 +70,6 @@ public class MenuOptionController {
                 .content(content)
                 .price(StringUtil.priceToInt(price))
                 .build());
-        return "redirect:/menu";
+        return "redirect:menu";
     }
 }
