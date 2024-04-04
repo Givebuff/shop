@@ -38,6 +38,11 @@ public class TestController {
         return "test/test";
     }
 
+    @GetMapping("/test/map")
+    public String testKakaoMap(Model model) {
+        return "test/kakaoMap";
+    }
+
     @PostMapping("/test/test")
     public String testPost(@RequestParam Map<String, String> formData){
         formData.forEach((key, value) -> {
