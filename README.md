@@ -21,7 +21,29 @@
 
 - [JDK 17](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
 
+
+주요기능(구현중)
+--------------
+- 홀, 배달, 예약 주문 관리
+- 고객 주문내역 관리
+- 장부 관리
+- 카카오 맵api를 활용한 위치 확인
+- 지출 관리
+
 사용방법
 -----------------------------------------------
 1. 자바를 다운받고 환경변수에 등록합니다.
-2. 
+2. src/main/resources 에서 properties폴더를 생성 후 properties_example에 있는 파일을 전부 옮겨준 뒤 db.properties를 자신의 db에 맞게 설정해준다.
+3. ```shell
+   // linux java build
+   ./gradlew build
+   // build된 jar파일 경로로 이동
+   cd ./build/libs
+   // jar 실행
+   java -jar 생성된jar.jar
+   ```
+
+실행 이미지
+--------------------------
+- 홀 관리
+<img src="/img/hole.png"  width="400px"/>
