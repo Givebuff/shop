@@ -36,12 +36,12 @@ AWS EC2, RDS, ELB, ROUTE53을 이용하여 DNS 등록할 예정
 1. 자바를 다운받고 환경변수에 등록합니다.
 2. src/main/resources 에서 properties폴더를 생성 후 properties_example에 있는 파일을 전부 옮겨준 뒤 db.properties를 자신의 db에 맞게 설정해준다.
 3. ```shell
-   // linux java build
+   # linux java build
    ./gradlew build
-   // build된 jar파일 경로로 이동
+   # build된 jar파일 경로로 이동
    cd ./build/libs
-   // jar 실행
-   java -jar 생성된jar.jar
+   # jar 실행(80 port)
+   sudo java -jar 생성된jar.jar
    ```
 
 실행 이미지
