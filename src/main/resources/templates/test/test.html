@@ -20,81 +20,29 @@
     <div class="space-y-6">
         <div>
             <div class="text-lg font-semibold mb-2">평점</div>
-            <div class="grid grid-cols-5">
+            <div id="order_menu" class="grid grid-cols-5">
                 <label class="flex items-center space-x-2">
                     <input type="radio"
                            class="form-radio"
-                           name="rating">
-                    <span>라디오1</span>
-                </label>
-                <label class="flex items-center space-x-2">
-                    <input type="radio"
-                           class="form-radio"
-                           name="rating">
-                    <span>라디오1</span>
-                </label>
-                <label class="flex items-center space-x-2">
-                    <input type="radio"
-                           class="form-radio"
-                           name="rating">
-                    <span>라디오1</span>
-                </label>
-                <label class="flex items-center space-x-2">
-                    <input type="radio"
-                           class="form-radio"
-                           name="rating">
-                    <span>라디오1</span>
-                </label>
-                <label class="flex items-center space-x-2">
-                    <input type="radio"
-                           class="form-radio"
-                           name="rating">
-                    <span>라디오1</span>
-                </label>
-                <label class="flex items-center space-x-2">
-                    <input type="radio"
-                           class="form-radio"
-                           name="rating">
-                    <span>라디오1</span>
-                </label>
-                <label class="flex items-center space-x-2">
-                    <input type="radio"
-                           class="form-radio"
-                           name="rating">
-                    <span>라디오1</span>
-                </label>
-                <label class="flex items-center space-x-2">
-                    <input type="radio"
-                           class="form-radio"
-                           name="rating">
-                    <span>라디오1</span>
-                </label>
-                <label class="flex items-center space-x-2">
-                    <input type="radio"
-                           class="form-radio"
-                           name="rating">
+                           name="main_menu">
                     <span>라디오1</span>
                 </label>
             </div>
         </div>
         <div>
             <div class="text-lg font-semibold mb-2">분류선</div>
-            <div class="grid grid-cols-5">
+            <div id="order_menu_option" class="grid grid-cols-5">
                 <label class="flex items-center space-x-2">
                     <input type="checkbox"
-                           class="form-checkbox">
-                    <span>체크박스</span>
-                </label>
-                <label class="flex items-center space-x-2">
-                    <input type="checkbox"
-                           class="form-checkbox">
+                           class="form-checkbox"
+                            name="menu_options">
                     <span>체크박스</span>
                 </label>
             </div>
         </div>
         <div class="flex">
-            <button class="ml-auto px-4 py-2 text-white bg-blue-500 rounded-md">버튼1</button>
-            <button class="ml-2 px-4 py-2 text-white bg-blue-500 rounded-md">버튼2</button>
+            <button id="menu_choice" class="ml-auto px-4 py-2 text-white bg-blue-500 rounded-md">메뉴 선택</button>
+            <button id="menu_init" class="ml-2 px-4 py-2 text-white bg-red-500 rounded-md">메뉴 초기화</button>
         </div>
         <div>
             <div class="text-lg font-semibold mb-2">테이블</div>
@@ -124,8 +72,8 @@
                     </div>
                 </div>
                 <div class="flex p-4">
-                    <button class="ml-auto px-4 py-2 text-white bg-blue-500 rounded-md">버튼1</button>
-                    <button class="ml-2 px-4 py-2 text-white bg-blue-500 rounded-md">버튼2</button>
+                    <button id="menu_order" class="ml-auto px-4 py-2 text-white bg-blue-500 rounded-md">메뉴 선택</button>
+                    <button id="menu_cancel" class="ml-2 px-4 py-2 text-white bg-red-500 rounded-md">메뉴 취소</button>
                 </div>
             </div>
         </div>
